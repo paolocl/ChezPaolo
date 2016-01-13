@@ -1,0 +1,20 @@
+<?php if(!isset($resultat)): ?>
+	<?php if(isset($Error)): ?>
+	<h2 style='text-align : center'><?= $Error; ?></h2>
+	<?php endif; ?>
+		<form action="<?= $requestUrl ?>/Booking" method="post">
+ 	
+  	<label for="dateResa">Date Réservation</label>
+  	<input type="text" name="dateResa" id="dateResa">  
+  	 	
+  	<label for="timeResa">Heure Réservation</label>
+  	<input type="text" name="timeResa" id="timeResa"> 
+  	
+  	<label for="NumberOfSeats">Nombre de personne</label>
+  	<input type="number" name="NumberOfSeats" id="NumberOfSeats"> 
+
+		<input type="submit" name="submit" value="envoyer"> 
+  </form>
+  <?php elseif(isset($resultat)) : ?>
+  <h2>Votre réservation numero <?= $resultat; ?> a bien été enregistré</h2>
+ <?php endif; ?>

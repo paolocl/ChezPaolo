@@ -1,0 +1,10 @@
+<?php //var_dump($listMeal); var_dump($requestUrl) ?>
+<article style="overflow: auto">
+	<h2><?=$listMeal['Name']?></h2>
+	<figure style="float:left">
+		<img src="<?= $wwwUrl ?>/images/meals/<?= $listMeal['Photo']?>" alt="<?=$listMeal['Name']?>">
+	</figure>
+	<p><?=$listMeal['Description']?></p>
+	<p>Il nous reste <?=$listMeal['QuantityInStock']?> <?=$listMeal['Name']?></p>
+	<p>PRIX : <?=number_format($listMeal['SalePrice'],2)?>€</p>
+</article>
