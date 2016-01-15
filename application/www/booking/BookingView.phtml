@@ -1,20 +1,58 @@
-<?php if(!isset($resultat)): ?>
-	<?php if(isset($Error)): ?>
-	<h2 style='text-align : center'><?= $Error; ?></h2>
-	<?php endif; ?>
-		<form action="<?= $requestUrl ?>/Booking" method="post">
- 	
-  	<label for="dateResa">Date Réservation</label>
-  	<input type="text" name="dateResa" id="dateResa">  
-  	 	
-  	<label for="timeResa">Heure Réservation</label>
-  	<input type="text" name="timeResa" id="timeResa"> 
-  	
-  	<label for="NumberOfSeats">Nombre de personne</label>
-  	<input type="number" name="NumberOfSeats" id="NumberOfSeats"> 
+	<?php if(!isset($resultat)): ?>
+		<?php if(isset($Error)): ?>
+		<h2 style='text-align : center' class=".generic-form .error-message"><?= $Error; ?></h2>
+		<?php endif; ?>
 
-		<input type="submit" name="submit" value="envoyer"> 
-  </form>
-  <?php elseif(isset($resultat)) : ?>
-  <h2>Votre réservation numero <?= $resultat; ?> a bien été enregistré</h2>
- <?php endif; ?>
+
+			<form action="<?= $requestUrl ?>/Booking" method="post" class="generic-form">
+				<fieldset>
+					<legend>Informations</legend>
+					<ul>
+					<li>
+						<label for="dateResa" class="generic-form">Date Réservation</label>
+						<input type="text" name="dateResa" id="dateResa" class="datepicker generic-form">  
+					</li>
+					<li>
+						<label for="timeResa" class="generic-form"> Heure Réservation</label>
+						<input type="text" name="timeResa" class="timeResa generic-form"> 
+					</li>
+					<li>
+						<label for="NumberOfSeats" class="generic-form">Nombre de personne</label>
+						<input type="number" name="NumberOfSeats" id="NumberOfSeats" class="generic-form"> 
+					</li>
+					<li id="parentSubmitBooking">
+						<input type="submit" name="submit" value="envoyer" class="button button-primary" id="submitBooking"> 
+					</li>
+					</ul>
+				</fieldset>
+		</form>
+
+		<?php elseif(isset($resultat)) : ?>
+		<h2>Votre réservation numero <?= $resultat; ?> a bien été enregistré</h2>	
+<?php endif; ?>
+<section>
+<?php foreach($bookingList as  $oneBooking) : ?>
+<fieldset>
+	<form action="<?= $requestUrl ?>" method="post" class="generic-form">
+	<input type="hidden" name="bookingId" value="<?= $oneBooking['Id']; ?>">
+		<legend>Numero de réservation : <?= $oneBooking['Id']; ?></legend>
+		<p>Date : <?= $oneBooking['BookingDate']; ?></p>
+		<p>Heure : <?= $oneBooking['BookingTime']; ?></p>
+		<p>Nombre de couvert : <?= $oneBooking['NumberOfSeats']; ?></p>
+		<input type="submit" name="supprimer" value="supprimer" class="button button-primary">
+		<!-- REQUET SUPRESSION-->
+</form>
+		<input type="button" value="modifier" class="button button-primary">
+		<!-- FORmulaire JS-->
+		<form action="AJAX" method="POST">
+			<label>Date : <input type="text" value="<?= $oneBooking['BookingDate']?>" name="BookingDate" ? class="datepicker"></label>
+			<label>Heure : <input type="text" value="<?= $oneBooking['BookingDate']?>" name="BookingTime" ?></label>
+			<label>Nombre de couvert : <input type="text" value="<?= $oneBooking['BookingDate']?>" name="NumberOfSeats" ?></label>
+			<input type="submit" name="modifier" value="modifier" class="button button-primary">
+		</form>
+</fieldset>
+<?php endforeach; ?>
+	
+</section>
+
+	

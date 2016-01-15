@@ -21,4 +21,12 @@ class BookingModel
 		
 		return $query->queryOne('SELECT * FROM Booking WHERE Customer_Id = ? ',[$Customer_Id]);
 	}
+	
+	public function findWithCredentials($email,$customer)
+	{
+		$ident = new Database();
+		
+	}
+	
+	
 }

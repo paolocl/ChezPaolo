@@ -32,22 +32,28 @@
         </a>
     </h1>
 </header>
-
 <!-- Interface utilisateur -->
 <nav class="user-interface">
     <ul class="link-list">
        <li>
        	<a  class="button button-primary" href="<?= $requestUrl ?>">Accueil</a>
        </li>
+       <?php if($userSession->isAuthenticated()): ?>
        <li>
        	<a  class="button button-primary" href="<?= $requestUrl ?>/Booking">Booking</a>
        </li>
+       <li class="layout-right">
+       		<p class="welcome">Bonjour <strong><?= $userSession->getFullName(); ?></strong></p>
+					<a class="button button-primary" href="<?= $requestUrl ?>/user/Logout?logout=out">Deconnexion</a>
+				</li>
+       <?php else: ?>
         <li>
-            <a class="button button-primary" href="/chezPaolo/index.php/user">Créer un compte</a>
+            <a class="button button-primary" href="<?= $requestUrl ?>/User">Créer un compte</a>
         </li>
         <li class="layout-right">
-					<a class="button button-primary" href="/chezPaolo/index.php/user/login">Connexion</a>
+					<a class="button button-primary" href="<?= $requestUrl ?>/user/Login">Connexion</a>
 				</li>
+				<?php endif; ?>
     </ul>
 </nav>
 

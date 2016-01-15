@@ -13,16 +13,8 @@ class HomeController
 			$meals = new MealModel();
 			$listMeals = $meals->listAll();
 			
-			return ['listMeals' => $listMeals];
-    }
-
-    public function httpPostMethod(Http $http, array $formFields)
-    {
-    	/*
-    	 * Méthode appelée en cas de requête HTTP POST
-    	 *
-    	 * L'argument $http est un objet permettant de faire des redirections etc.
-    	 * L'argument $formFields contient l'équivalent de $_POST en PHP natif.
-    	 */
+			$userSession = new UserSession();
+			
+			return ['listMeals' => $listMeals, 'userSession' => $userSession];
     }
 }

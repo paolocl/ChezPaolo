@@ -5,8 +5,8 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 $(document).ready(function(){
-	$("#dateResa").datepicker();
-	$('#timeResa').timepicker({
+	$(".datepicker").datepicker();
+	$('.timeResa').timepicker({
     hourText: 'Heures',
     minuteText: 'Minutes',
     timeSeparator: ':',

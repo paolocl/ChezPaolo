@@ -10,7 +10,24 @@ class BookingController
     	 * L'argument $http est un objet permettant de faire des redirections etc.
     	 * L'argument $queryFields contient l'équivalent de $_GET en PHP natif.
     	 */
-			echo 'haha';
+				$userSession = new UserSession();
+				if($userSession->isAuthenticated())
+				{
+					$userId = $userSession->getId();
+					
+					$database = new Database();
+					
+					$bookingList = $database->query('SELECT `BookingDate`, `BookingTime`, `NumberOfSeats`, `Id` FROM `Booking` WHERE `Customer_Id` = ? ', [$userId]);
+					
+					//var_dump($bookingList);
+					
+					return ['bookingList' => $bookingList ];
+					
+				}
+				else
+				{
+					$http->redirectTo('/');
+				}
     }
 
     public function httpPostMethod(Http $http, array $formFields)
@@ -22,25 +39,35 @@ class BookingController
     	 * L'argument $formFields contient l'équivalent de $_POST en PHP natif.
     	 */
 			
-			
 			/*$date = new DateModel();
 			var_dump($date->testDate($formFields['dateResa'])); //0 FAUX - 1 VRAI REJEX */
-			
-			$dateTime = date_create($formFields['dateResa'] . ' ' . $formFields['timeResa'] );
-			$now = new DateTime("now");
-			$resaDate = date_format($dateTime, 'Y-m-d');
-			$resaTime = date_format($dateTime, 'H:i:s');
-			
-			//var_dump($formFields);
-			if(!empty($formFields['dateResa']) && !empty($formFields['timeResa']) && !empty($formFields['NumberOfSeats']) && $dateTime > $now && ctype_digit($formFields['NumberOfSeats'])){
-				$Booking = new BookingModel();
-				$resultat = $Booking->register('1', $resaDate, $resaTime, $formFields['NumberOfSeats']);
-				return ['resultat' => $resultat];
-			}elseif($dateTime < $now){
-				return ['Error' => 'Nous ne pouvons vous réserver une table pour une date antérieur à aujourd\'hui'];
-			}else{
-				return ['Error' => 'Un champ n\'a pas était remplie correctement'];
-			}
-			
+				$userSession = new UserSession();
+				if($userSession->isAuthenticated())
+				{
+					$dateTime = date_create($formFields['dateResa'] . ' ' . $formFields['timeResa'] );
+					$now = new DateTime("now");
+					$resaDate = date_format($dateTime, 'Y-m-d');
+					$resaTime = date_format($dateTime, 'H:i:s');
+
+					//var_dump($formFields);
+					if(!empty($formFields['dateResa']) && !empty($formFields['timeResa']) && !empty($formFields['NumberOfSeats']) && $dateTime > $now && ctype_digit($formFields['NumberOfSeats'])){
+
+						$userId = $userSession->getId();
+
+						$Booking = new BookingModel();
+						$resultat = $Booking->register($userId, $resaDate, $resaTime, $formFields['NumberOfSeats']);
+						return ['resultat' => $resultat];
+					}elseif($dateTime < $now){
+						return ['Error' => 'Nous ne pouvons vous réserver une table pour une date antérieur à aujourd\'hui'];
+					}else{
+						return ['Error' => 'Un champ n\'a pas était remplie correctement'];
+					}					
+				}
+				else
+				{
+					echo 'lu';
+					die();
+					$http->redirectTo('/');
+				}
     }
 }

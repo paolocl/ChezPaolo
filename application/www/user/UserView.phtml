@@ -1,0 +1,94 @@
+<h2><i class="fa fa-user"></i> Création d'un compte client</h2>
+
+
+<?php if(empty($_SESSION)): ?>
+<form action="<?= $requestUrl ?>/User" method='post' class="generic-form">
+    <fieldset>
+        <legend><i class="fa fa-book"></i> Identité et coordonnées</legend>
+        <ul>
+            <li>
+                <label for="FirstName">Prenom* :
+                </label>
+                    <input type="text" name="FirstName" id="FirstName" required>
+            </li>
+            <li>
+                <label for="LastName">Nom* :
+                </label>
+                    <input type="text" name="LastName" id="LastName" required>
+            </li>
+            <li>
+                <label for="Birthdate">Date de Naissance :
+                </label>
+                   <select name="Day" id="Day">
+                   <?php for($j=1; $j<31; $j++) :?>
+                   	<option value="<?= $j ?>"><?= $j ?></option>
+                   	<?php endfor; ?>
+                   </select>
+                   <span>/</span>
+                   <select name="Month" id="Month">
+                   <?php for($i = 2; $i<=13; $i++) : ?>
+                   	<option value="<?= $i ?>"><?php setlocale(LC_ALL, "fr_FR"); echo strftime('%B', mktime(0,0,0,$i,0,0))?></option>
+                   	<?php endfor; ?>
+                   </select>
+                   <span>/</span>
+                   <select name="Year" id="Year">
+                   <?php for($i=1920; $i<(intval(date('Y'))-17); $i++):?>
+                   	<option value="<?= $i ?>" <?php if($i === 1988): ?> selected <?php endif;?>><?= $i ?></option>
+                   <?php endfor; ?>
+                   </select>
+                    <?php ?>
+            </li>
+            <li>
+                <label for="Phone">Numero de tel* :
+                </label>
+                    <input type="text" name="Phone" id="Phone" class="phone" maxlength="10" required>
+            </li>
+            <li>
+                <label for="Address">Adresse* :
+                </label>
+                    <input type="text" name="Address" id="Address" required>
+            </li>
+            <li>
+                <label for="Address2">Adresse complementaire :
+                </label>
+                    <input type="text" name="Address2" id="Address2">
+            </li>
+            <li>
+                <label for="City">Ville* :
+                </label>
+                    <input type="text" name="City" id="City" required>
+            </li>
+            <li>
+                <label for="ZipCode">Code Postal* :
+                </label>
+                    <input type="text" name="ZipCode" id="ZipCode" class="zip-code" maxlength="5" required>
+            </li>
+        </ul>
+    </fieldset>
+
+
+    <fieldset>
+        <legend><i class="fa fa-lock"></i> Informations d'authentification</legend>
+        <ul>
+            <li>
+                <label for="Email">Email* :
+                </label>
+                    <input type="text" name="Email" id="Email" required>
+            </li>
+            <li>
+                <label for="password">Password* :
+                </label>
+                    <input type="password" name="password" id="password" required>
+            </li>
+            <li>
+                <label for="password2">Confirm password :
+                </label>
+                    <input type="password" name="password2" id="password2">
+            </li>
+        </ul>
+    </fieldset>
+    <input type="submit" name="submit" class="button button-primary" value="m'enregistrer">
+</form>
+<?php else: ?>
+	<h2>Tu es déjà enregistré(e)</h2>
+<?php endif; ?>

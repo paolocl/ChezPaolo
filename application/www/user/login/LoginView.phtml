@@ -1,0 +1,19 @@
+<h2><i class="fa fa-lock"></i> Se connecter avec un compte utilisateur</h2>
+<fieldset>
+	<legend>Login</legend>
+	<form action="<?= $requestUrl ?>/user/Login" method='post' class="generic-form">
+		<ul>
+			<li>
+				<label for="Login">Identifiant : </label>
+				<input type="text" name="Login" id="Login" requierd>
+			</li>
+			<li>
+				<label for="Password">Password : </label>
+				<input type="Password" name="Password" id="Password" requierd>
+			</li>
+			<li>
+				<input type="submit" name="submit" value="submit">
+			</li>
+		</ul>
+	</form>
+</fieldset>

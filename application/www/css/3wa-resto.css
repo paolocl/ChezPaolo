@@ -15,7 +15,7 @@ a
 }
 a:hover
 {
-    color: #339966;
+    color: white;
 }
 
 body
@@ -158,6 +158,7 @@ html
 {
     display: inline-block;
     margin: 0 1em;
+		text-transform: capitalize;
 }
 .user-interface .welcome strong
 {
