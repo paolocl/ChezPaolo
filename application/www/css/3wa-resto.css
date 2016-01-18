@@ -93,6 +93,7 @@ h2
 html
 {
     background: url('../images/background.png') repeat;
+	  background-attachment: fixed;
     overflow-y: scroll;
 }
 

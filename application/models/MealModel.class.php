@@ -16,4 +16,36 @@ class MealModel
 		
 		return $query->query('SELECT * FROM Meal');
 	}
+	
+	
+	// A FAIRE
+	public function modifyMeal()
+	{
+		$query = new Database();
+		
+		return $query->executeSql(
+			'UPDATE table
+			SET Name = ?,
+					Description = ?,
+					QuantityInStock = ?,
+					BuyPrice = ?,
+					SalePrice = ?,
+					SalePrice = ?,
+			WHERE Id = ?', 
+			[]
+		);
+	}
+	
+	// A FAIRE
+	public function addMeal()
+	{
+		$query = new Database();
+		
+		return $query->executeSql(
+			'INSER INTO table
+			(nom_colonne_1, ..) VALUES (?,..)',
+			[] 
+		);
+	}
+	
 }

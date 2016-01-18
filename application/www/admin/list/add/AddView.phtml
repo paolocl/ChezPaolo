@@ -1,0 +1,31 @@
+<?php if($_SESSION['admin'] === 'on'): ?>
+<h2>Ajouter produit</h2>
+<fieldset>
+	<legend>Ajouter produit</legend>
+<form action="<?= $requestUrl ?>/Admin/List/Add" method="POST" enctype="multipart/form-data" class="generic-form" data-form>
+<input type="hidden" name="Id">
+<ul>
+	<li>
+	<label for="Name">Nom Produit :</label><input type="text" name="Name">
+	</li>
+	<li>	
+	<label for="Description">Description : </label><textarea name="Description" id="Description" cols="30" rows="10"></textarea>
+	</li>
+	<li>	
+	<label for="Photo">Image : </label><input type="file" name="Photo">
+	<label for="Photo">Attention toutes modification sera définitive</label>
+	</li>
+	<li>	
+	<label for="QuantityInStock">Quantité disponible :</label><input type="number" name="QuantityInStock">
+	</li>
+	<li>	
+	<label for="BuyPrice">Prix d'achat :</label><input type="text" name="BuyPrice">
+	</li>
+	<li>	
+	<label for="SalePrice">Prix de vente :</label><input type="text" name="SalePrice">
+	</li>
+	<input type="submit" class="button button-primary">
+</ul>
+</form>
+</fieldset>
+<?php endif; ?>

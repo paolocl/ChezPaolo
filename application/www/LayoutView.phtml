@@ -21,6 +21,7 @@
 
     <!-- JavaScript de l'application -->
     <script src="<?= $wwwUrl ?>/js/utilities.js"></script>
+    <script src="<?= $wwwUrl ?>/js/classes/FormValidator.class.js"></script>
 </head>
 <body>
 
@@ -44,6 +45,10 @@
        </li>
        <li class="layout-right">
        		<p class="welcome">Bonjour <strong><?= $userSession->getFullName(); ?></strong></p>
+					<a class="button button-primary" href="<?= $requestUrl ?>/user/Logout?logout=out">Deconnexion</a>
+				</li>
+      <?php elseif (empty($_SESSION['admin']) == false): ?>
+      	<li class="layout-right">
 					<a class="button button-primary" href="<?= $requestUrl ?>/user/Logout?logout=out">Deconnexion</a>
 				</li>
        <?php else: ?>
@@ -74,9 +79,9 @@
 
 <!-- Code principal JavaScript de l'application -->
 <script src="<?= $wwwUrl ?>/js/jquery-2.2.0.min.js"></script>
-<script src="<?= $wwwUrl ?>/js/main.js"></script>
 <script src="<?= $wwwUrl ?>/JqueryUi/jquery-ui.js"></script>
 <script src="<?= $wwwUrl ?>/JqueryUi/jquery.ui.timepicker.js"></script>
 <script src="<?= $wwwUrl ?>/js/checkAjax.js"></script>
+<script src="<?= $wwwUrl ?>/js/main.js"></script>
 </body>
 </html>

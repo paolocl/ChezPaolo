@@ -1,0 +1,36 @@
+<?php if($_SESSION['admin'] === 'on'): ?>
+<h2>Modification produit</h2>
+<? var_dump($meal); ?>
+<fieldset>
+	<legend>Modification produit <?= $meal['Name']; ?></legend>
+<form action="<?= $requestUrl ?>/Admin/List/Modification" method="POST" enctype="multipart/form-data" class="generic-form" data-form>
+<input type="hidden" name="Id" value="<?= $meal['Id']; ?>">
+<ul>
+	<li>
+	<label for="Name">Nom Produit :</label><input type="text" name="Name" value="<?= $meal['Name']; ?>">
+	</li>
+	<li>	
+	<label for="Description">Description : </label><textarea name="Description" id="Description" cols="30" rows="10"><?= $meal['Description']; ?></textarea>
+	</li>
+	<li>	
+	<label for="Image">Votre Photo actuel : </label>
+	<img src='<?= $wwwUrl ?>/images/meals/<?= $meal['Photo']; ?>'  alt="<?= $meal['Name']; ?>">
+	</li>
+	<li>
+	<label for="Photo">Image : </label><input type="file" name="Photo">
+	<label for="Photo">Attention toutes modification sera définitive</label>
+	</li>
+	<li>	
+	<label for="QuantityInStock">Quantité disponible :</label><input type="number" name="QuantityInStock" value="<?= $meal['QuantityInStock']; ?>">
+	</li>
+	<li>	
+	<label for="BuyPrice">Prix d'achat :</label><input type="text" name="BuyPrice" value="<?= $meal['BuyPrice']; ?>">
+	</li>
+	<li>	
+	<label for="SalePrice">Prix de vente :</label><input type="text" name="SalePrice" value="<?= $meal['SalePrice']; ?>">
+	</li>
+	<input type="submit" class="button button-primary" name="Modification">
+</ul>
+</form>
+</fieldset>
+<?php endif; ?>

@@ -1,5 +1,5 @@
-<h2><i class="fa fa-lock"></i> Se connecter avec un compte utilisateur</h2>
-	<form action="<?= $requestUrl ?>/user/Login" method='post' class="generic-form" data-form>
+<h2><i class="fa fa-lock"></i> Se connecter comme Admin</h2>
+	<form action="<?= $requestUrl ?>/Admin" method='post' class="geneNameric-form">
 <aside class="error-message hidden">
         <h3><i class="fa fa-warning"></i> Il y a <em class="total-error-count">1</em> erreur(s) dans le formulaire !</h3>
         <p></p>
@@ -8,12 +8,12 @@
 	<legend>Informations d'authentification</legend>
 		<ul>
 			<li>
-				<label for="text">Email : </label>
-				<input type="text" name="Login" id="Login" requierd  data-required data-name='Identifiant'>
+				<label for="Name">Identifiant : </label>
+				<input type="text" name="Name" id="Name" requierd  data-required class="generic-form" data-form>
 			</li>
 			<li>
 				<label for="Password">Password : </label>
-				<input type="Password" name="Password" id="Password" requierd data-required data-name='Mots de passe'>
+				<input type="Password" name="Password" id="Password" requierd data-required>
 			</li>
 	</ul>
 </fieldset>
