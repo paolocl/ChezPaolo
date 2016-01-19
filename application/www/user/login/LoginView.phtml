@@ -4,12 +4,17 @@
         <h3><i class="fa fa-warning"></i> Il y a <em class="total-error-count">1</em> erreur(s) dans le formulaire !</h3>
         <p></p>
     </aside>
+    <?php if(isset($errorMessage)): ?>
+    <aside class="error-message">
+        <p><?= $errorMessage; ?></p>
+		</aside>
+		<?php endif; ?>
 <fieldset>
 	<legend>Informations d'authentification</legend>
 		<ul>
 			<li>
 				<label for="text">Email : </label>
-				<input type="text" name="Login" id="Login" requierd  data-required data-name='Identifiant'>
+				<input type="text" name="Login" id="Login" requierd  data-required data-name='Identifiant' value="<?= $Login ?>">
 			</li>
 			<li>
 				<label for="Password">Password : </label>

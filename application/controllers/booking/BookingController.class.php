@@ -10,6 +10,8 @@ class BookingController
     	 * L'argument $http est un objet permettant de faire des redirections etc.
     	 * L'argument $queryFields contient l'équivalent de $_GET en PHP natif.
     	 */
+			$date = new DateTime ();
+			
 				$userSession = new UserSession();
 				if($userSession->isAuthenticated())
 				{
@@ -21,7 +23,7 @@ class BookingController
 					
 					//var_dump($bookingList);
 					
-					return ['bookingList' => $bookingList ];
+					return ['bookingList' => $bookingList, 'now' =>  new DateTime() ];
 					
 				}
 				else
@@ -56,7 +58,11 @@ class BookingController
 
 						$Booking = new BookingModel();
 						$resultat = $Booking->register($userId, $resaDate, $resaTime, $formFields['NumberOfSeats']);
-						return ['resultat' => $resultat];
+						
+						$flashBag = new FlashBag();
+						$flashBag->add("Votre réservation numero $resultat du $resaDate à $resaTime pour ".$formFields['NumberOfSeats'] ." est bien pris en compte");
+						$http->redirectTo('/');
+						
 					}elseif($dateTime < $now){
 						return ['Error' => 'Nous ne pouvons vous réserver une table pour une date antérieur à aujourd\'hui'];
 					}else{
@@ -65,8 +71,6 @@ class BookingController
 				}
 				else
 				{
-					echo 'lu';
-					die();
 					$http->redirectTo('/');
 				}
     }

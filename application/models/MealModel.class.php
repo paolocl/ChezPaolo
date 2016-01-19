@@ -17,22 +17,29 @@ class MealModel
 		return $query->query('SELECT * FROM Meal');
 	}
 	
-	
-	// A FAIRE
-	public function modifyMeal()
+	public function modifyMeal($Name, $Description, $QuantityInStock, $BuyPrice, $SalePrice, $MealId)
 	{
 		$query = new Database();
-		
 		return $query->executeSql(
-			'UPDATE table
+			'UPDATE Meal
 			SET Name = ?,
 					Description = ?,
 					QuantityInStock = ?,
 					BuyPrice = ?,
-					SalePrice = ?,
-					SalePrice = ?,
+					SalePrice = ?
 			WHERE Id = ?', 
-			[]
+			[$Name, $Description, $QuantityInStock, $BuyPrice, $SalePrice, $MealId]
+		);
+	}
+	
+	public function modifyPicture($Photo, $Id)
+	{
+		$query = new Database();
+		return $query->executeSql(
+			'UPDATE Meal
+			SET Photo = ?
+			WHERE Id = ?', 
+			[$Photo, $Id]
 		);
 	}
 	

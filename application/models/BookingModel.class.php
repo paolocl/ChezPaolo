@@ -25,7 +25,13 @@ class BookingModel
 	public function findWithCredentials($email,$customer)
 	{
 		$ident = new Database();
+	}
+	
+	public function deletBooking($bookingId)
+	{
+		$database = new Database();
 		
+		$database->executeSql('DELETE FROM Booking WHERE Id = ?',[$bookingId]);
 	}
 	
 	

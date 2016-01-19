@@ -20,21 +20,29 @@ class ModificationController
     	 * L'argument $http est un objet permettant de faire des redirections etc.
     	 * L'argument $formFields contient l'équivalent de $_POST en PHP natif.
     	 */
-			
-			if(array_key_exists('Photo', $formFields))
+			$userSession = new UserSession();
+			if($userSession->isAdminAuthenticated() == false)
 			{
-				//move_uploaded_file();
-				//requet a faire dans meal
-			}
+				$http->redirectTo('/');
+			}			
 			
 			
-				var_dump($formFields);
+			
+				//var_dump($formFields);
+				//var_dump($_FILES);
 			if(array_key_exists('Modification',$formFields))
 			{
+				if($http->hasUploadedFile('Photo'))
+				{
+					$pathinfo = $http->moveUploadedFile('Photo', '/images/meals');
+					var_dump($pathinfo);
+					$mealModel = new MealModel();
+					$mealModel->modifyPicture($pathinfo, $formFields['Id']);
+				};
+
 				$mealModel = new MealModel();
-				var_dump($formFields);
-				die();
-				//$mealModel->modifyMeal(....);
+				$result = $mealModel->modifyMeal($formFields['Name'], $formFields['Description'], $formFields['QuantityInStock'], $formFields['BuyPrice'], $formFields['SalePrice'], $formFields['Id']);
+				$http->redirectTo('/Admin/List');
 			}
 			elseif(ctype_digit($formFields['meal_Id']))
 			{

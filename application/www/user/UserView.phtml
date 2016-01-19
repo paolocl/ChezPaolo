@@ -1,12 +1,17 @@
 <h2><i class="fa fa-user"></i> Création d'un compte client</h2>
 
-<?php if(empty($_SESSION)): ?>
+<?php if($userSession->isAuthenticated() == false): ?>
 <form action="<?= $requestUrl ?>/User" method='post' class="generic-form" data-form>
    
     <aside class="error-message hidden">
         <h3><i class="fa fa-warning"></i> Il y a <em class="total-error-count">1</em> erreur(s) dans le formulaire !</h3>
         <p></p>
     </aside>
+    <?php if(isset($errorMessage)): ?>
+    <aside class="error-message">
+        <p><?= $errorMessage; ?></p>
+		</aside>
+		<?php endif; ?>
     
     <fieldset>       
         <legend><i class="fa fa-book"></i> Identité et coordonnées</legend>
@@ -14,29 +19,35 @@
             <li>
                 <label for="FirstName">Prenom* :
                 </label>
-                    <input type="text" name="FirstName" id="FirstName" required data-required data-name='Prenom'>
+                    <input type="text" name="FirstName" id="FirstName" required data-required data-name='Prenom' value="<?= $FirstName ?>">
             </li>
             <li>
                 <label for="LastName">Nom* :
                 </label>
-                    <input type="text" name="LastName" id="LastName" required data-required data-name='Nom'>
+                    <input type="text" name="LastName" id="LastName" value="<?= $LastName ?>" required data-required data-name='Nom'>
             </li>
             <li>
                 <label for="Birthdate">Date de Naissance :
                 </label>
                    <select name="Day" id="Day" data-required data-name='Jour Naissance'>
                    <?php for($j=1; $j<31; $j++) :?>
+                   <!--A FAIRE-->
+                   <!--value="<?= $Day ?>"-->
                    	<option value="<?= $j ?>"><?= $j ?></option>
                    	<?php endfor; ?>
                    </select>
                    <span>/</span>
                    <select name="Month" id="Month" data-required data-name='Mois Naissance'>
                    <?php for($i = 2; $i<=13; $i++) : ?>
+                   <!--A FAIRE-->
+                   <!--value="<?= $Month ?>"-->
                    	<option value="<?= $i ?>"><?php setlocale(LC_ALL, "fr_FR"); echo strftime('%B', mktime(0,0,0,$i,0,0))?></option>
                    	<?php endfor; ?>
                    </select>
                    <span>/</span>
                    <select name="Year" id="Year" data-required data-name='Année Naissance'>
+                   <!--A FAIRE-->
+                   <!--value="<?= $Year ?>"-->
                    <?php for($i=1920; $i<(intval(date('Y'))-17); $i++):?>
                    	<option value="<?= $i ?>" <?php if($i === 1988): ?> selected <?php endif;?>><?= $i ?></option>
                    <?php endfor; ?>
@@ -46,27 +57,27 @@
             <li>
                 <label for="Phone">Numero de tel* :
                 </label>
-                    <input type="text" name="Phone" id="Phone" class="phone" maxlength="10" required data-required data-name='Numero de télèphone' data-length="10" data-type="number">
+                    <input type="text" name="Phone" value="<?= $Phone ?>" id="Phone" class="phone" maxlength="10" required data-required data-name='Numero de télèphone' data-length="10" data-type="number">
             </li>
             <li>
                 <label for="Address">Adresse* :
                 </label>
-                    <input type="text" name="Address" id="Address" required data-required data-name='Adresse'>
+                    <input type="text" name="Address" value="<?= $Address ?>" id="Address" required data-required data-name='Adresse'>
             </li>
             <li>
                 <label for="Address2">Adresse complementaire :
                 </label>
-                    <input type="text" name="Address2" id="Address2" data-name='Adresse2'>
+                    <input type="text" name="Address2" value="<?= $Address2 ?>" id="Address2" data-name='Adresse2'>
             </li>
             <li>
                 <label for="City">Ville* :
                 </label>
-                    <input type="text" name="City" id="City" required data-required data-name='Ville'>
+                    <input type="text" name="City" value="<?= $City ?>" id="City" required data-required data-name='Ville'>
             </li>
             <li>
                 <label for="ZipCode">Code Postal* :
                 </label>
-                    <input type="text" name="ZipCode" id="ZipCode" class="zip-code" maxlength="5" required data-required data-name='Code Postal' data-length="5" data-type="number">
+                    <input type="text" name="ZipCode" id="ZipCode" class="zip-code" maxlength="5" required data-required data-name='Code Postal' data-length="5" data-type="number" value="<?= $ZipCode ?>">
             </li>
         </ul>
     </fieldset>
@@ -78,7 +89,7 @@
             <li>
                 <label for="Email">Email* :
                 </label>
-                    <input type="text" name="Email" id="Email" required data-required data-name='Email'>
+                    <input type="text" name="Email" id="Email" required data-required data-name='Email' placeholder="<?= $Email ?>">
             </li>
             <li>
                 <label for="password">Password* :

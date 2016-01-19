@@ -32,6 +32,19 @@ class UserSession
 		return false;
 	}
 	
+	public function isAdminAuthenticated()
+	{
+		if(array_key_exists('admin',$_SESSION))
+		{
+			if(empty($_SESSION['admin']) == false)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 	public function getId()
 	{
 		return $_SESSION['user']['Id'];

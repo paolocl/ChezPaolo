@@ -30,6 +30,18 @@ function dateTimePicker()
 	}
 }
 
+function runOrderForm()
+{
+	var orderForm;
+	var $order = $('.addCard');
+	
+	$('.addCard').each(function(){
+		orderForm = new OrderForm($(this));
+		orderForm.run();
+	});
+}
+
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -43,6 +55,7 @@ $(function(){
 	
 	runFormValidation();
 	
+	runOrderForm();
 	
 	
 });

@@ -23,36 +23,34 @@
 					<li id="parentSubmitBooking">
 						<input type="submit" name="submit" value="envoyer" class="button button-primary" id="submitBooking"> 
 					</li>
+					<li id="errorAjax"></li>
 					</ul>
 				</fieldset>
-		</form>
-
-		<?php elseif(isset($resultat)) : ?>
-		<h2>Votre réservation numero <?= $resultat; ?> a bien été enregistré</h2>	
+		</form>	
 <?php endif; ?>
+
+
+
+<?php if(isset($bookingList)) : ?>
 <section>
 <?php foreach($bookingList as  $oneBooking) : ?>
 <fieldset>
-	<form action="<?= $requestUrl ?>" method="post" class="generic-form">
+	<form action="<?= $requestUrl ?>/Booking/Supbooking" method="post" class="generic-form">
 	<input type="hidden" name="bookingId" value="<?= $oneBooking['Id']; ?>">
+	<input type="hidden" name="bookingDate" value="<?= $oneBooking['BookingDate']; ?>">
 		<legend>Numero de réservation : <?= $oneBooking['Id']; ?></legend>
 		<p>Date : <?= $oneBooking['BookingDate']; ?></p>
 		<p>Heure : <?= $oneBooking['BookingTime']; ?></p>
 		<p>Nombre de couvert : <?= $oneBooking['NumberOfSeats']; ?></p>
+		<?php if($now < new DateTime($oneBooking['BookingDate'])): ?>
 		<input type="submit" name="supprimer" value="supprimer" class="button button-primary">
+		<?php endif; ?>
 		<!-- REQUET SUPRESSION-->
 </form>
-		<input type="button" value="modifier" class="button button-primary">
-		<!-- FORmulaire JS-->
-		<form action="AJAX" method="POST">
-			<label>Date : <input type="text" value="<?= $oneBooking['BookingDate']?>" name="BookingDate" ? class="datepicker"></label>
-			<label>Heure : <input type="text" value="<?= $oneBooking['BookingDate']?>" name="BookingTime" ?></label>
-			<label>Nombre de couvert : <input type="text" value="<?= $oneBooking['BookingDate']?>" name="NumberOfSeats" ?></label>
-			<input type="submit" name="modifier" value="modifier" class="button button-primary">
-		</form>
 </fieldset>
 <?php endforeach; ?>
 	
 </section>
 
+<?php endif; ?>
 	

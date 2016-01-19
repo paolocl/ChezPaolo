@@ -17,12 +17,13 @@ $(document).ready(function(){
 				if(data["count"] == 1)
 				{
 					$('#submitBooking').css('display', 'none');
-					$('#parentSubmitBooking').append('<p id=\'errorBooking\'>Vous avez déja réservé à cette date</p>');
+					$('#errorAjax').html('<p id=\'errorBooking\'>Vous avez déja réservé à cette date</p>');
 				}
 				else if(data["count"] == 0)
 				{
 					$('#submitBooking').css('display', 'inline-block');
 					$('#errorBooking').remove();
+					$('#errorAjax').empty();
 				}
 			}
 		})

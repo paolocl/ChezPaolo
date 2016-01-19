@@ -46,7 +46,11 @@ class CustomerModel
 	public function sameMail($Email)
 	{
 		$Database = new Database();
-		return $Database->queryOne('SELECT COUNT(*) AS result FROM Customer WHERE Email = ?',[$Email]);
+		if($Database->queryOne('SELECT COUNT(*) AS result FROM Customer WHERE Email = ?',[$Email]) !== '0')
+		{
+			throw new DomainException('Email déjà existant');
+		}
+		return true;
 	}
 	
 	
@@ -79,19 +83,20 @@ class CustomerModel
 		$user =  $Database->queryOne('SELECT Id, Password FROM Customer WHERE Email = ?',[$email]);
 		if(!$user)
 		{
-			return 'Error=4';
+			throw new DomainException('Email inconnu');
 		}
 		else
 		{
 			$verificationPassword = $this->verifyPassword($password, $user['Password']);
 			if($verificationPassword)
 			{
+				$this->updateLastLoginTimestamp($user['Id']);
 				return $user['Id'];
 			}
 			
 			else
 			{
-				return 'Error=5';
+				throw new DomainException('Mauvaise Mots de Passe');
 			}
 		}
 	}
@@ -104,6 +109,13 @@ class CustomerModel
 		//return password_verify($clearPassword,$hashPassword);
 		//PHP <5.5.0
 		return crypt($clearPassword,$hashPassword) == $hashPassword;
+	}
+	
+	//UPDATE LASTLOGINTIMESTAMP
+	private function updateLastLoginTimestamp($Id)
+	{
+		$Database = new Database();
+		$Database->executeSql('UPDATE Customer SET LastLoginTimestamp = NOW() WHERE Id = ?', [$Id] );
 	}
 	
 	

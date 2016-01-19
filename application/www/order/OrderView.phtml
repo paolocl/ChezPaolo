@@ -1,8 +1,9 @@
-<!-- Message de notification -->
-<!-- Code HTML à écrire -->
+<aside id="card">
+	
+</aside>
+   
 
-<!-- Liste des aliments -->
-<table class="generic-table meal-list">
+   <table class="generic-table meal-list">
     <caption>Carte du restaurant</caption>
     <tbody>
         <?php //var_dump($_SESSION);//var_dump($listMeals); ?>
@@ -11,9 +12,13 @@
 						<td><img src="<?= $wwwUrl ?>/images/meals/<?= $oneMeal['Photo']?>" alt=""></td>
 						<td>
 							<strong><a href="<?= $requestUrl; ?>/Meal?produit_id=<?= $oneMeal['Id']?>"><?= $oneMeal['Name']?></a></strong>
-							<p><?= $oneMeal['Description']?></p>
 						</td>
 						<td class="number"><strong><?= number_format($oneMeal['SalePrice'],2);?></strong> €</td>
+						<td class="addCard">
+						<input type="number" data-id="<?= $oneMeal['Id']?>" class="quantity" data-name='<?= $oneMeal['Name']?>'>
+						<input type="button" name="add" value="Ajouter au Panier" class="add button button-primary small">
+						<p></p>
+						</td>
 				</tr>
         <?php endforeach; ?>
     </tbody>

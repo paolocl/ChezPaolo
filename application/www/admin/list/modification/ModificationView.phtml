@@ -1,6 +1,7 @@
-<?php if($_SESSION['admin'] === 'on'): ?>
+<?php if($userSession->isAdminAuthenticated()): ?>
 <h2>Modification produit</h2>
-<? var_dump($meal); ?>
+<?php if(isset($meal)): ?>
+<? //var_dump($meal); ?>
 <fieldset>
 	<legend>Modification produit <?= $meal['Name']; ?></legend>
 <form action="<?= $requestUrl ?>/Admin/List/Modification" method="POST" enctype="multipart/form-data" class="generic-form" data-form>
@@ -33,4 +34,5 @@
 </ul>
 </form>
 </fieldset>
+<?php endif; ?>
 <?php endif; ?>

@@ -21,7 +21,7 @@
 
     <!-- JavaScript de l'application -->
     <script src="<?= $wwwUrl ?>/js/utilities.js"></script>
-    <script src="<?= $wwwUrl ?>/js/classes/FormValidator.class.js"></script>
+    <script src="<?= $wwwUrl ?>/js/classes/FormValidator.class.js"></script><script src="<?= $wwwUrl ?>/js/classes/OrderForm.class.js"></script>
 </head>
 <body>
 
@@ -32,6 +32,11 @@
             <img src="<?= $wwwUrl ?>/images/logo.gif" height="63" width="57" alt="3WA Restaurant">Restaurant - Made In America !
         </a>
     </h1>
+    <?php if($flashBag->hasMessages() === true): ?>
+    <aside class='notice' id="notice">
+			<p><strong><?= $flashBag->fetchMessage(); ?></strong></p>
+    </aside>
+    <?php endif; ?>
 </header>
 <!-- Interface utilisateur -->
 <nav class="user-interface">
@@ -43,6 +48,9 @@
        <li>
        	<a  class="button button-primary" href="<?= $requestUrl ?>/Booking">Booking</a>
        </li>
+       <li>
+       	<a  class="button button-primary" href="<?= $requestUrl ?>/Order">Commander</a>
+       </li>
        <li class="layout-right">
        		<p class="welcome">Bonjour <strong><?= $userSession->getFullName(); ?></strong></p>
 					<a class="button button-primary" href="<?= $requestUrl ?>/user/Logout?logout=out">Deconnexion</a>
@@ -50,6 +58,12 @@
       <?php elseif (empty($_SESSION['admin']) == false): ?>
       	<li class="layout-right">
 					<a class="button button-primary" href="<?= $requestUrl ?>/user/Logout?logout=out">Deconnexion</a>
+				</li>
+				<li>
+					<a class="button button-primary" href="<?= $requestUrl ?>/Admin/List">List Produit</a>
+				</li>
+				<li>
+					<a class="button button-primary" href="<?= $requestUrl ?>/Admin/List/Add">Ajouter Produit</a>
 				</li>
        <?php else: ?>
         <li>
