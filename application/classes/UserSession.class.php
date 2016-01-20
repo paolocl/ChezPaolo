@@ -70,4 +70,31 @@ class UserSession
 		return $_SESSION['user']['Email'];
 	}
 	
+	public function tryConnection($ip, $customerId = null)
+	{
+		
+		$numberOfBeforeConnection = $this->getNumberOfConnectionByIp($ip); 
+		$database = new Database();
+		
+		//un update a chaque fois puis faire un count pour connaitre le nombre aujourd'hui
+		if($numberOfBeforeConnection == null)
+		{
+			$database->executeSql('
+			INSERT INTO Login (LoginIp, NumberOfConnection, LoginTime, CustomerId) 
+			VALUES ?,?,NOW(),?',
+			[$ip, 1, $customerId]);
+		}
+		else
+		{
+			throw new DomainException('Vous vous été connecté trop de fois sans jamais réussir à vous loger');
+		}
+	}
+	
+	private function getNumberOfConnectionByIp($ip)
+	{
+		$database = new Database();
+		
+		return $database->queryOne('SELECT NumberOfConnection FROM Login WHERE LoginIp = ?',[$ip]);
+	}
+	
 }

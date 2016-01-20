@@ -27,10 +27,20 @@ class SupbookingController
 			die();*/
 			
 			$date = new DateTime ();
+			$userSession = new UserSession();
+			$bookingModel = new BookingModel();
+			$customerId = intval($userSession->getId());
 			
-			if(ctype_digit($formFields['bookingId']) && $date < new DateTime($formFields['bookingDate']))
+			if($userSession->isAuthenticated())
 			{
-				$bookingModel = new BookingModel();
+				$customerId = intval($userSession->getId());
+				
+				$checkBookingById = $bookingModel->checkBookingById($customerId,intval($formFields['bookingId']),$formFields['bookingDate']);
+				
+			
+			if(ctype_digit($formFields['bookingId']) && $date < new DateTime($formFields['bookingDate']) && $checkBookingById)
+			{
+					
 				$bookingModel->DeletBooking($formFields['bookingId']);
 				
 				$flashBag = new FlashBag();
@@ -44,5 +54,6 @@ class SupbookingController
 			
 			$http->redirectTo('/Booking');
 
+			}
     }
 }

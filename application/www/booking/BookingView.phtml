@@ -2,9 +2,14 @@
 		<?php if(isset($Error)): ?>
 		<h2 style='text-align : center' class=".generic-form .error-message"><?= $Error; ?></h2>
 		<?php endif; ?>
-
+		
 
 			<form action="<?= $requestUrl ?>/Booking" method="post" class="generic-form">
+<?php if(isset($errorMessage)): ?>
+    <aside class="error-message">
+        <p><?= $errorMessage; ?></p>
+		</aside>
+		<?php endif; ?>
 				<fieldset>
 					<legend>Informations</legend>
 					<ul>
@@ -18,7 +23,7 @@
 					</li>
 					<li>
 						<label for="NumberOfSeats" class="generic-form">Nombre de personne</label>
-						<input type="number" name="NumberOfSeats" id="NumberOfSeats" class="generic-form"> 
+						<input type="number" name="NumberOfSeats" id="NumberOfSeats" class="generic-form" value="<?= $NumberOfSeats ?>"> 
 					</li>
 					<li id="parentSubmitBooking">
 						<input type="submit" name="submit" value="envoyer" class="button button-primary" id="submitBooking"> 
@@ -31,26 +36,37 @@
 
 
 
-<?php if(isset($bookingList)) : ?>
-<section>
-<?php foreach($bookingList as  $oneBooking) : ?>
-<fieldset>
-	<form action="<?= $requestUrl ?>/Booking/Supbooking" method="post" class="generic-form">
-	<input type="hidden" name="bookingId" value="<?= $oneBooking['Id']; ?>">
-	<input type="hidden" name="bookingDate" value="<?= $oneBooking['BookingDate']; ?>">
-		<legend>Numero de réservation : <?= $oneBooking['Id']; ?></legend>
-		<p>Date : <?= $oneBooking['BookingDate']; ?></p>
-		<p>Heure : <?= $oneBooking['BookingTime']; ?></p>
-		<p>Nombre de couvert : <?= $oneBooking['NumberOfSeats']; ?></p>
-		<?php if($now < new DateTime($oneBooking['BookingDate'])): ?>
-		<input type="submit" name="supprimer" value="supprimer" class="button button-primary">
-		<?php endif; ?>
-		<!-- REQUET SUPRESSION-->
-</form>
-</fieldset>
-<?php endforeach; ?>
-	
-</section>
+<?php if(isset($futurBookingList)) : ?>
+	<h2>Réservations Futurs</h2>
+	<fieldset>
+		<?php foreach($futurBookingList as  $oneBooking) : ?>
+			<fieldset>
+					<legend>Numero de réservation : <?= $oneBooking['Id']; ?></legend>
+				<form action="<?= $requestUrl ?>/Booking/Supbooking" method="post" class="generic-form">
+					<input type="hidden" name="bookingId" value="<?= $oneBooking['Id']; ?>">
+					<input type="hidden" name="bookingDate" value="<?= $oneBooking['BookingDate']; ?>">
+					<p>Date : <?= $oneBooking['BookingDate']; ?></p>
+					<p>Heure : <?= $oneBooking['BookingTime']; ?></p>
+					<p>Nombre de couvert : <?= $oneBooking['NumberOfSeats']; ?></p>
+					<input type="submit" name="supprimer" value="supprimer" class="button button-primary">
+					<!-- REQUET SUPRESSION-->
+					</form>
+			</fieldset>
+		<?php endforeach; ?>
+	</fieldset>
+<?php endif; ?>
 
+<?php if(isset($oldBookingList)) : ?>
+	<h2>Réservations Passées</h2>
+	<fieldset>
+		<?php foreach($oldBookingList as  $oneBooking) : ?>
+			<fieldset>
+					<legend>Numero de réservation : <?= $oneBooking['Id']; ?></legend>
+					<p>Date : <?= $oneBooking['BookingDate']; ?></p>
+					<p>Heure : <?= $oneBooking['BookingTime']; ?></p>
+					<p>Nombre de couvert : <?= $oneBooking['NumberOfSeats']; ?></p>
+			</fieldset>
+		<?php endforeach; ?>
+	</fieldset>
 <?php endif; ?>
 	

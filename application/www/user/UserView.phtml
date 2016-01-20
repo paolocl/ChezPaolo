@@ -32,16 +32,13 @@
                    <select name="Day" id="Day" data-required data-name='Jour Naissance'>
                    <?php for($j=1; $j<31; $j++) :?>
                    <!--A FAIRE-->
-                   <!--value="<?= $Day ?>"-->
-                   	<option value="<?= $j ?>"><?= $j ?></option>
+                   	<option value="<?= $j ?>" <?php if($Day == $j) echo 'selected' ?>><?= $j ?></option>
                    	<?php endfor; ?>
                    </select>
                    <span>/</span>
                    <select name="Month" id="Month" data-required data-name='Mois Naissance'>
                    <?php for($i = 2; $i<=13; $i++) : ?>
-                   <!--A FAIRE-->
-                   <!--value="<?= $Month ?>"-->
-                   	<option value="<?= $i ?>"><?php setlocale(LC_ALL, "fr_FR"); echo strftime('%B', mktime(0,0,0,$i,0,0))?></option>
+                   	<option value="<?= $i ?>" <?php if($Month == $i) echo 'selected' ?>><?php setlocale(LC_ALL, "fr_FR"); echo strftime('%B', mktime(0,0,0,$i,0,0))?></option>
                    	<?php endfor; ?>
                    </select>
                    <span>/</span>
@@ -49,7 +46,7 @@
                    <!--A FAIRE-->
                    <!--value="<?= $Year ?>"-->
                    <?php for($i=1920; $i<(intval(date('Y'))-17); $i++):?>
-                   	<option value="<?= $i ?>" <?php if($i === 1988): ?> selected <?php endif;?>><?= $i ?></option>
+                   	<option value="<?= $i ?>" <?php if($Year == $i) echo 'selected' ?> ><?= $i ?></option>
                    <?php endfor; ?>
                    </select>
                     <?php ?>

@@ -1,6 +1,11 @@
 <?php
 class BookingModel
 {
+	public static $dateException = 'Vous avez entrée des caractères dans votre formulaire';
+	public static $PasseDateException = 'Date antérieurs à la date d\'aujourd\'hui';
+	public static $FieldsException = 'Champs mal rempli';
+	
+	
 	public function register($Customer_Id, $BookingDate, $BookingTime, $NumberOfSeats)
 	{
 		$query = new Database();
@@ -32,6 +37,24 @@ class BookingModel
 		$database = new Database();
 		
 		$database->executeSql('DELETE FROM Booking WHERE Id = ?',[$bookingId]);
+	}
+	
+	public function bookingListById($userId)
+	{
+		$database = new Database();
+					
+		return $database->query('SELECT `BookingDate`, `BookingTime`, `NumberOfSeats`, `Id` FROM `Booking` WHERE `Customer_Id` = ? ORDER BY BookingDate DESC', [$userId]);
+	}
+	
+	public function checkBookingById($customerId, $bookingId, $bookingDate)
+	{
+		$database = new Database();
+		
+		if($database->queryOne('SELECT COUNT(*) as result FROM Booking WHERE Customer_Id = ? AND Id = ? AND BookingDate = ?', [$customerId, $bookingId, $bookingDate])['result'] == 1)
+		{
+			return true;
+		}
+		return false;
 	}
 	
 	

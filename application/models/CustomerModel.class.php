@@ -46,7 +46,7 @@ class CustomerModel
 	public function sameMail($Email)
 	{
 		$Database = new Database();
-		if($Database->queryOne('SELECT COUNT(*) AS result FROM Customer WHERE Email = ?',[$Email]) !== '0')
+		if($Database->queryOne('SELECT COUNT(*) AS result FROM Customer WHERE Email = ?',[$Email])['result'] != 0)
 		{
 			throw new DomainException('Email déjà existant');
 		}

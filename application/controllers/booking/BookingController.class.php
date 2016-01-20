@@ -11,25 +11,31 @@ class BookingController
     	 * L'argument $queryFields contient l'équivalent de $_GET en PHP natif.
     	 */
 			$date = new DateTime ();
+			$form = new BookingForm();
+			$oldBookingList = [];
+			$futurBookingList = [];
 			
 				$userSession = new UserSession();
 				if($userSession->isAuthenticated())
 				{
 					$userId = $userSession->getId();
 					
-					$database = new Database();
+					$bookingModel = new BookingModel();
+					$bookingList = $bookingModel->bookingListById($userId);
 					
-					$bookingList = $database->query('SELECT `BookingDate`, `BookingTime`, `NumberOfSeats`, `Id` FROM `Booking` WHERE `Customer_Id` = ? ', [$userId]);
 					
-					//var_dump($bookingList);
+					$futurBookingList = array_filter($bookingList, function($value){ return new DateTime() <= new DateTime($value['BookingDate']); });
+					$oldBookingList = array_filter($bookingList, function($value){ return new DateTime() > new DateTime($value['BookingDate']); });
 					
-					return ['bookingList' => $bookingList, 'now' =>  new DateTime() ];
+					return ['futurBookingList' => $futurBookingList, 'oldBookingList' => $oldBookingList, '_form' => $form ];
 					
 				}
 				else
 				{
 					$http->redirectTo('/');
 				}
+			
+			
     }
 
     public function httpPostMethod(Http $http, array $formFields)
@@ -43,10 +49,15 @@ class BookingController
 			
 			/*$date = new DateModel();
 			var_dump($date->testDate($formFields['dateResa'])); //0 FAUX - 1 VRAI REJEX */
+			try{
 				$userSession = new UserSession();
 				if($userSession->isAuthenticated())
 				{
 					$dateTime = date_create($formFields['dateResa'] . ' ' . $formFields['timeResa'] );
+					if($dateTime == false)
+					{
+						throw new InvalidArgumentException(BookingModel::$dateException);
+					};
 					$now = new DateTime("now");
 					$resaDate = date_format($dateTime, 'Y-m-d');
 					$resaTime = date_format($dateTime, 'H:i:s');
@@ -56,22 +67,34 @@ class BookingController
 
 						$userId = $userSession->getId();
 
-						$Booking = new BookingModel();
-						$resultat = $Booking->register($userId, $resaDate, $resaTime, $formFields['NumberOfSeats']);
+						$booking = new BookingModel();
+						$resultat = $booking->register($userId, $resaDate, $resaTime, $formFields['NumberOfSeats']);
 						
 						$flashBag = new FlashBag();
 						$flashBag->add("Votre réservation numero $resultat du $resaDate à $resaTime pour ".$formFields['NumberOfSeats'] ." est bien pris en compte");
 						$http->redirectTo('/');
 						
 					}elseif($dateTime < $now){
-						return ['Error' => 'Nous ne pouvons vous réserver une table pour une date antérieur à aujourd\'hui'];
+												throw new InvalidArgumentException(BookingModel::$PasseDateException);
+
 					}else{
-						return ['Error' => 'Un champ n\'a pas était remplie correctement'];
+												throw new InvalidArgumentException(BookingModel::$FieldsException);
+
 					}					
 				}
 				else
 				{
 					$http->redirectTo('/');
 				}
+			}
+			catch (InvalidArgumentException $event)
+			{
+				//var_dump($event);
+				$form = new BookingForm();
+        $form->bind($formFields);
+        $form->setErrorMessage($event->getMessage());
+				
+				return [ '_form' => $form ];
+			}
     }
 }
