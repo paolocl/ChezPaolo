@@ -76,13 +76,19 @@ class CustomerModel
 		return crypt($password,$salt);
 	}
 	
+	
 	// LOGIN
-	public function findWithCredentials($email,$password)
+	public function findWithCredentials($email,$password, $ip)
 	{
+		//TROP DE CONNEXION FAILLED
+		$userSession = new UserSession();
+		$userSession->tryConnection($ip);	//EXCEPTION INSIDE
+		
 		$Database = new Database();
 		$user =  $Database->queryOne('SELECT Id, Password FROM Customer WHERE Email = ?',[$email]);
 		if(!$user)
-		{
+		{			
+			$userSession->createLoginByIp($ip);
 			throw new DomainException('Email inconnu');
 		}
 		else
@@ -91,11 +97,12 @@ class CustomerModel
 			if($verificationPassword)
 			{
 				$this->updateLastLoginTimestamp($user['Id']);
+				$userSession->createLoginByIp($ip, $user['Id'], 1);
 				return $user['Id'];
 			}
-			
 			else
 			{
+				$userSession->createLoginByIp($ip);
 				throw new DomainException('Mauvaise Mots de Passe');
 			}
 		}

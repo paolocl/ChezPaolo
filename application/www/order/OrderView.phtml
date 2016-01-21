@@ -1,25 +1,77 @@
 <aside id="card">
-	
 </aside>
+  
+<aside class="error-message hidden">
+        <h3><i class="fa fa-warning"></i> Il y a <em class="total-error-count">1</em> erreur(s) dans le formulaire !</h3>
+        <p></p>
+</aside>
+   
+<!--   Autre solution-->
+   <fieldset>
+        <legend>Ajouter un article</legend>
+        <form action="" method="POST" class="generic-form" id="OrderForm">
+			<ul>
+				<li>
+					<label for="meal">Faites Vos choix</label>
+					<select name="meal" id="meal">
+						<?php foreach($listMeals as $oneMeal): ?>
+						<option value="<?= $oneMeal['Id']?>"><?= $oneMeal['Name']?></option>
+						<?php endforeach; ?>
+					</select>
+					<article class="meal-details no-left-label" id="meal-details">
+						<img src="" alt="">
+						<p></p>
+						<span>Prix : <strong></strong>€</span>
+					</article>
+				</li>
+				<li>
+					<button class="no-left-label button
+button-primary"><i class="fa fa-cart-arrow-down"></i> Ajouter au panier</button>
+				</li>
+			</ul>
+		</form>
+	</fieldset>
+   
+   
+   
+   
+   
+   
+<!--Ma solution-->
    
 
    <table class="generic-table meal-list">
     <caption>Carte du restaurant</caption>
     <tbody>
-        <?php //var_dump($_SESSION);//var_dump($listMeals); ?>
-        <?php foreach($listMeals as $oneMeal): ?>
-        <tr>
-						<td><img src="<?= $wwwUrl ?>/images/meals/<?= $oneMeal['Photo']?>" alt=""></td>
-						<td>
-							<strong><a href="<?= $requestUrl; ?>/Meal?produit_id=<?= $oneMeal['Id']?>"><?= $oneMeal['Name']?></a></strong>
-						</td>
-						<td class="number"><strong><?= number_format($oneMeal['SalePrice'],2);?></strong> €</td>
-						<td class="addCard">
-						<input type="number" data-id="<?= $oneMeal['Id']?>" class="quantity" data-name='<?= $oneMeal['Name']?>'>
-						<input type="button" name="add" value="Ajouter au Panier" class="add button button-primary small">
-						<p></p>
-						</td>
-				</tr>
-        <?php endforeach; ?>
+		<form action="" method="POST" id="OrderFormOneByOne">
+			<?php //var_dump($_SESSION);//var_dump($listMeals); ?>
+			<?php foreach($listMeals as $oneMeal): ?>
+			<tr>
+				<td>
+					<img src="<?= $wwwUrl ?>/images/meals/<?= $oneMeal['Photo']?>" alt="<?= $oneMeal['Name']?>">
+				</td>
+				<td>
+					<strong>
+						<a href="<?= $requestUrl; ?>/Meal?produit_id=<?= $oneMeal['Id']?>"><?= $oneMeal['Name']?></a>
+					</strong>
+				</td>
+				<td class="number">
+					<p><strong><?= number_format($oneMeal['SalePrice'],2);?></strong> €</p>
+				</td>
+				<td>
+					<label for="quantity">Quantités souhaités</label>
+					<input type="number" data-id="<?= $oneMeal['Id']?>" class="quantity" data-name='<?= $oneMeal['Name']?>'>
+				</td>
+				<td>
+					<input type="button" name="add" value="Ajouter au Panier" class="add button button-primary small">
+					<p></p>
+				</td>
+			</tr>
+			<?php endforeach; ?>
+		</form>
     </tbody>
 </table>
+
+
+<script src="<?= $wwwUrl ?>/js/classes/OrderForm.class.js"></script>
+<script src="<?= $wwwUrl ?>/js/classes/OrderForm2.class.js"></script>

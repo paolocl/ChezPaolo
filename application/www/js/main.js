@@ -25,22 +25,28 @@ function dateTimePicker()
 		$('.timeResa').timepicker({
     hourText: 'Heures',
     minuteText: 'Minutes',
-    timeSeparator: ':',
+    timeSeparator: ':'
 	});
 	}
 }
 
-function runOrderForm()
-{
-	var orderForm;
-	var $order = $('.addCard');
-	
-	$('.addCard').each(function(){
-		orderForm = new OrderForm($(this));
-		orderForm.run();
-	});
-}
 
+	function runOrderForm()
+	{
+		var orderForm;
+
+		$('.addCard').each(function(){
+			orderForm = new OrderForm($(this));
+			orderForm.run();
+		});
+	}
+
+
+	function runOrderForm2() {
+		var orderForm2 = new OrderForm2();
+		orderForm2.run();
+		orderForm2.onChangeMeal();
+	}
 
 
 
@@ -54,8 +60,11 @@ $(function(){
 	dateTimePicker();
 	
 	runFormValidation();
-	
-	runOrderForm();
-	
-	
+
+	if(typeof(OrderForm) != 'undefined') {
+		runOrderForm();
+	}
+	if(typeof(OrderForm2) != 'undefined') {
+		runOrderForm2();
+	}
 });

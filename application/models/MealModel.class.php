@@ -43,15 +43,14 @@ class MealModel
 		);
 	}
 	
-	// A FAIRE
-	public function addMeal()
+	public function addMeal($name, $description, $photo, $quantityInStock, $buyPrice, $salePrice)
 	{
 		$query = new Database();
 		
 		return $query->executeSql(
-			'INSER INTO table
-			(nom_colonne_1, ..) VALUES (?,..)',
-			[] 
+			'INSER INTO Meal
+			(Name, Description, Photo, QuantityInStock, BuyPrice, SalePrice) VALUES (?,?,?,?,?)',
+			[$name, $description, $photo, $quantityInStock, $buyPrice, $salePrice]
 		);
 	}
 	

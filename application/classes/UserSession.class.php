@@ -70,31 +70,36 @@ class UserSession
 		return $_SESSION['user']['Email'];
 	}
 	
-	public function tryConnection($ip, $customerId = null)
+	public function tryConnection($ip)
 	{
-		
-		$numberOfBeforeConnection = $this->getNumberOfConnectionByIp($ip); 
-		$database = new Database();
-		
+				
+		$NumberOfTryConnection = $this->getNumberOfTryConnectionByIp($ip);
 		//un update a chaque fois puis faire un count pour connaitre le nombre aujourd'hui
-		if($numberOfBeforeConnection == null)
-		{
-			$database->executeSql('
-			INSERT INTO Login (LoginIp, NumberOfConnection, LoginTime, CustomerId) 
-			VALUES ?,?,NOW(),?',
-			[$ip, 1, $customerId]);
-		}
-		else
+		if($NumberOfTryConnection['total'] > 5)
 		{
 			throw new DomainException('Vous vous été connecté trop de fois sans jamais réussir à vous loger');
 		}
 	}
 	
-	private function getNumberOfConnectionByIp($ip)
+	private function getNumberOfTryConnectionByIp($ip)
 	{
 		$database = new Database();
 		
-		return $database->queryOne('SELECT NumberOfConnection FROM Login WHERE LoginIp = ?',[$ip]);
+		return $database->queryOne('
+		SELECT COUNT(LoginIp) AS total 
+		FROM Login 
+		WHERE (LoginTime BETWEEN DATE_SUB(NOW(),INTERVAL 5 MINUTE AND NOW())) 
+		AND LoginIp = ?',[$ip]);
+	}
+	
+	public function createLoginByIp($ip, $customerId = null, $status = 0)
+	{
+		$database = new Database();
+		
+		return $database->executeSql('
+			INSERT INTO Login (LoginIp, LoginTime, Customer_Id, status) 
+			VALUES (?,NOW(),?,?)',
+			[$ip, $customerId, $status]);
 	}
 	
 }

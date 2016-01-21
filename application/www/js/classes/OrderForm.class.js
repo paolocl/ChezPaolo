@@ -6,18 +6,17 @@ var OrderForm = function($ajouterPanier)
 	this.$quantity = $ajouterPanier.find('.quantity');
 	this.$add = $ajouterPanier.find('.add');
 	this.errors = null;
-	
-}
+};
 
 OrderForm.prototype.run = function()
 {
 	this.$add.click(this.onClickForm.bind(this));
-}
+};
 
 OrderForm.prototype.onClickForm = function ()
 {
 	var card;
-	this.errors = new Array();
+	this.errors =[];
 	var $paragrapheError = this.$ajouterPanier.find('p');
 	this.checkOneQuantity();
 	
@@ -35,8 +34,7 @@ OrderForm.prototype.onClickForm = function ()
 			$paragrapheError.append(error.fieldName);
 		});
 	}
-	
-}
+};
 
 OrderForm.prototype.checkOneQuantity = function()
 {
@@ -49,20 +47,20 @@ OrderForm.prototype.checkOneQuantity = function()
 		});
 	}
 	$.merge(this.errors, errors);
-}
+};
 
 
 OrderForm.prototype.addOneQuantity = function()
 {
 	var jsonEncodeOrder;
-	var card = new Array();
+	var card = [];
 	var $quantity = this.$quantity.val().trim();
 	var $mealId = this.$quantity.data('id');
 	var $mealName = this.$quantity.data('name');
 	var order = { 
 		'mealId' : $mealId,
 		'mealName' : $mealName,
-		'quantity' : $quantity,
+		'quantity' : $quantity
 	};
 	var checkCard = this.checkCardElement();
 	
@@ -73,8 +71,7 @@ OrderForm.prototype.addOneQuantity = function()
 	card.push(order);
 	jsonEncodeOrder = JSON.stringify(card);
 	sessionStorage.setItem('card', jsonEncodeOrder);
-
-}
+};
 
 OrderForm.prototype.checkCardElement = function()
 {
@@ -84,11 +81,11 @@ OrderForm.prototype.checkCardElement = function()
 		return jQuery.parseJSON(card);
 	}
 	return false;
-}
+};
 
 OrderForm.prototype.getCard = function()
 {
 	return jQuery.parseJSON(sessionStorage.getItem('card'));
-}
+};
 
 
