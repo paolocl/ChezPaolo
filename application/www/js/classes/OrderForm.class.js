@@ -60,7 +60,7 @@ OrderForm.prototype.addOneQuantity = function()
 	var order = { 
 		'mealId' : $mealId,
 		'mealName' : $mealName,
-		'quantity' : $quantity,
+		'quantity' : $quantity
 	};
 	var checkCard = this.checkCardElement();
 	
@@ -71,8 +71,7 @@ OrderForm.prototype.addOneQuantity = function()
 	card.push(order);
 	jsonEncodeOrder = JSON.stringify(card);
 	sessionStorage.setItem('card', jsonEncodeOrder);
-
-}
+};
 
 OrderForm.prototype.checkCardElement = function()
 {
@@ -82,11 +81,11 @@ OrderForm.prototype.checkCardElement = function()
 		return jQuery.parseJSON(card);
 	}
 	return false;
-}
+};
 
 OrderForm.prototype.getCard = function()
 {
 	return jQuery.parseJSON(sessionStorage.getItem('card'));
-}
+};
 
 
