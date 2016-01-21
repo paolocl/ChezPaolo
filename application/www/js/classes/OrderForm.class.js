@@ -54,6 +54,7 @@ OrderForm.prototype.addOneQuantity = function()
 {
 	var jsonEncodeOrder;
 	var card = [];
+    var checkElementInCard = false;
 	var $quantity = this.$quantity.val().trim();
 	var $mealId = this.$quantity.data('id');
 	var $mealName = this.$quantity.data('name');
@@ -66,9 +67,23 @@ OrderForm.prototype.addOneQuantity = function()
 	
 	if(checkCard != null)
 	{
-		card = this.getCard();
-	}
-	card.push(order);
+        card = this.getCard();
+        $.map(card, function(value)
+        {
+            if(value.mealId == $mealId)
+            {
+                value.quantity = parseInt($quantity) + parseInt(value.quantity);
+                checkElementInCard = true;
+            }
+        });
+        if(checkElementInCard == false){card.push(order)};
+    }
+    else
+    {
+        card.push(order);
+    }
+
+
 	jsonEncodeOrder = JSON.stringify(card);
 	sessionStorage.setItem('card', jsonEncodeOrder);
 };
