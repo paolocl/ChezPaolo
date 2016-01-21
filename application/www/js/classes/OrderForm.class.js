@@ -24,7 +24,8 @@ OrderForm.prototype.onClickForm = function ()
 	
 	if(this.errors.length == 0)
 	{
-		this.addOneQuantity();
+        cart = new Cart(this.$ajouterPanier);
+        cart.addOneQuantity();
 	}
 	else
 	{
@@ -41,57 +42,11 @@ OrderForm.prototype.checkOneQuantity = function()
 	if(this.$quantity.val().trim() <= 0)
 	{
 		errors.push({
-			fieldName : 'La quantités de ' + this.$quantity.data('name') + ' est null ou négative',
+			fieldName : 'La quantités de ' + this.$quantity.data('name') + ' est null ou négative'
 		});
 	}
 	$.merge(this.errors, errors);
 };
 
-
-OrderForm.prototype.addOneQuantity = function()
-{
-	var jsonEncodeOrder;
-	var cart = [];
-    var checkElementIncart = false;
-	var $quantity = this.$quantity.val().trim();
-	var $mealId = this.$quantity.data('id');
-	var $mealName = this.$quantity.data('name');
-	var order = { 
-		'mealId' : $mealId,
-		'mealName' : $mealName,
-		'quantity' : $quantity
-	};
-	var checkcart = this.checkcartElement();
-	
-	if(checkcart != null)
-	{
-        cart = loadDataFromDomStorage('cart');
-        $.map(cart, function(value)
-        {
-            if(value.mealId == $mealId)
-            {
-                value.quantity = parseInt($quantity) + parseInt(value.quantity);
-                checkElementIncart = true;
-            }
-        });
-        if(checkElementIncart == false){cart.push(order)};
-    }
-    else
-    {
-        cart.push(order);
-    }
-
-	saveDataToDomStorage('cart', cart);
-};
-
-OrderForm.prototype.checkcartElement = function()
-{
-	var cart = loadDataFromDomStorage('cart');
-	if(cart === null)
-	{
-		return jQuery.parseJSON(cart);
-	}
-	return false;
-};
 
 
