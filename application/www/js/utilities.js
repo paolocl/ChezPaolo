@@ -70,16 +70,7 @@ function isNumber(value)
 
 function loadDataFromDomStorage(name)
 {
-    var jsonData;
-
-    jsonData = window.localStorage.getItem(name);
-
-    /*
-     * Donnée simple (chaîne) -> JSON parse (= désérialisation) -> Donnée complexe
-     *
-     * Voir ci-dessous pour plus d'explications sur le pourquoi du JSON.
-     */
-    return JSON.parse(jsonData);
+    return jQuery.parseJSON(sessionStorage.getItem(name));
 }
 
 function saveDataToDomStorage(name, data)
@@ -97,5 +88,5 @@ function saveDataToDomStorage(name, data)
      */
     jsonData = JSON.stringify(data);
 
-    window.localStorage.setItem(name, jsonData);
+    sessionStorage.setItem(name, jsonData);
 }

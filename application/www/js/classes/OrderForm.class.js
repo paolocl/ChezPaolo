@@ -15,7 +15,7 @@ OrderForm.prototype.run = function()
 
 OrderForm.prototype.onClickForm = function ()
 {
-	var card;
+	var cart;
 	this.errors =[];
 	var $paragrapheError = this.$ajouterPanier.find('p');
 	this.checkOneQuantity();
@@ -25,8 +25,6 @@ OrderForm.prototype.onClickForm = function ()
 	if(this.errors.length == 0)
 	{
 		this.addOneQuantity();
-		card  = this.getCard();
-		//FAIRE FOREACH POUR AFFICHER CHACQUE OBJET DU TABLEAU
 	}
 	else
 	{
@@ -53,8 +51,8 @@ OrderForm.prototype.checkOneQuantity = function()
 OrderForm.prototype.addOneQuantity = function()
 {
 	var jsonEncodeOrder;
-	var card = [];
-    var checkElementInCard = false;
+	var cart = [];
+    var checkElementIncart = false;
 	var $quantity = this.$quantity.val().trim();
 	var $mealId = this.$quantity.data('id');
 	var $mealName = this.$quantity.data('name');
@@ -63,44 +61,37 @@ OrderForm.prototype.addOneQuantity = function()
 		'mealName' : $mealName,
 		'quantity' : $quantity
 	};
-	var checkCard = this.checkCardElement();
+	var checkcart = this.checkcartElement();
 	
-	if(checkCard != null)
+	if(checkcart != null)
 	{
-        card = this.getCard();
-        $.map(card, function(value)
+        cart = loadDataFromDomStorage('cart');
+        $.map(cart, function(value)
         {
             if(value.mealId == $mealId)
             {
                 value.quantity = parseInt($quantity) + parseInt(value.quantity);
-                checkElementInCard = true;
+                checkElementIncart = true;
             }
         });
-        if(checkElementInCard == false){card.push(order)};
+        if(checkElementIncart == false){cart.push(order)};
     }
     else
     {
-        card.push(order);
+        cart.push(order);
     }
 
-
-	jsonEncodeOrder = JSON.stringify(card);
-	sessionStorage.setItem('card', jsonEncodeOrder);
+	saveDataToDomStorage('cart', cart);
 };
 
-OrderForm.prototype.checkCardElement = function()
+OrderForm.prototype.checkcartElement = function()
 {
-	var card = sessionStorage.getItem('card');
-	if(card === null)
+	var cart = loadDataFromDomStorage('cart');
+	if(cart === null)
 	{
-		return jQuery.parseJSON(card);
+		return jQuery.parseJSON(cart);
 	}
 	return false;
-};
-
-OrderForm.prototype.getCard = function()
-{
-	return jQuery.parseJSON(sessionStorage.getItem('card'));
 };
 
 
