@@ -25,6 +25,8 @@ class AddController
     	 * L'argument $http est un objet permettant de faire des redirections etc.
     	 * L'argument $formFields contient l'équivalent de $_POST en PHP natif.
     	 */
+				//var_dump($_FILES);
 				//var_dump($formFields);
+				// A FAIRE
     }
 }

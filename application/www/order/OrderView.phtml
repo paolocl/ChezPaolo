@@ -14,7 +14,7 @@
 							<strong><a href="<?= $requestUrl; ?>/Meal?produit_id=<?= $oneMeal['Id']?>"><?= $oneMeal['Name']?></a></strong>
 						</td>
 						<td class="number"><strong><?= number_format($oneMeal['SalePrice'],2);?></strong> €</td>
-						<td class="addCard">
+						<td class="addCart">
 						<input type="number" data-id="<?= $oneMeal['Id']?>" class="quantity" data-name='<?= $oneMeal['Name']?>'>
 						<input type="button" name="add" value="Ajouter au Panier" class="add button button-primary small">
 						<p></p>

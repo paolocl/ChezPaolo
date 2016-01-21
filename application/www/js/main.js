@@ -25,7 +25,7 @@ function dateTimePicker()
 		$('.timeResa').timepicker({
     hourText: 'Heures',
     minuteText: 'Minutes',
-    timeSeparator: ':',
+    timeSeparator: ':'
 	});
 	}
 }
@@ -33,9 +33,9 @@ function dateTimePicker()
 function runOrderForm()
 {
 	var orderForm;
-	var $order = $('.addCard');
+	var $order = $('.addCart');
 	
-	$('.addCard').each(function(){
+	$('.addCart').each(function(){
 		orderForm = new OrderForm($(this));
 		orderForm.run();
 	});
