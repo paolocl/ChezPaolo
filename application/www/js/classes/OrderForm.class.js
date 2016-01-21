@@ -15,9 +15,12 @@ OrderForm.prototype.run = function()
 
 OrderForm.prototype.onClickForm = function ()
 {
+    console.log(this);
 	var card;
 	this.errors =[];
-	var $paragrapheError = this.$ajouterPanier.find('p');
+	var $paragrapheError = $(this).parents('tr').find('p');
+
+
 	this.checkOneQuantity();
 	
 	$paragrapheError.empty();
@@ -54,38 +57,55 @@ OrderForm.prototype.addOneQuantity = function()
 {
 	var jsonEncodeOrder;
 	var card = [];
-	var $quantity = this.$quantity.val().trim();
-	var $mealId = this.$quantity.data('id');
-	var $mealName = this.$quantity.data('name');
-	var order = { 
+    var checkElementInCard = false;
+    var $quantity = this.$quantity.val().trim();
+    var $mealId = this.$quantity.data('id');
+    var $mealName = this.$quantity.data('name');
+    var order = {
 		'mealId' : $mealId,
 		'mealName' : $mealName,
 		'quantity' : $quantity
 	};
-	var checkCard = this.checkCardElement();
-	
-	if(checkCard != null)
+    var checkCard = this.checkCardEmptyCard();
+
+    console.log(checkCard);
+    if(checkCard != null)
 	{
-		card = this.getCard();
-	}
-	card.push(order);
+        card = this.getCard();
+        $.map(card, function(value)
+        {
+            if(value.mealId == $mealId)
+            {
+                value.quantity = parseInt($quantity) + parseInt(value.quantity);
+                checkElementInCard = true;
+            }
+        });
+        if(checkElementInCard == false){card.push(order)};
+    }
+    else
+    {
+        card.push(order);
+    }
+
+
 	jsonEncodeOrder = JSON.stringify(card);
 	sessionStorage.setItem('card', jsonEncodeOrder);
 };
 
-OrderForm.prototype.checkCardElement = function()
+OrderForm.prototype.checkCardEmptyCard = function()
 {
 	var card = sessionStorage.getItem('card');
 	if(card === null)
 	{
-		return jQuery.parseJSON(card);
+		return $.parseJSON(card);
 	}
 	return false;
 };
 
 OrderForm.prototype.getCard = function()
 {
-	return jQuery.parseJSON(sessionStorage.getItem('card'));
+	return $.parseJSON(sessionStorage.getItem('card'));
 };
+
 
 

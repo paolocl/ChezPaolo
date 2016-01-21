@@ -48,8 +48,7 @@ FormValidator.prototype.checkRequiredField = function()
 	var errors;
 	errors = [];
 	this.$form.find('[data-required]').each(function(){
-		
-		if($(this).val().trim() == 0)
+		if($(this).val().trim() === '')
 		{
 			errors.push({ 
 				fieldName : $(this).data('name'),
@@ -85,18 +84,33 @@ FormValidator.prototype.checkDataTypes = function()
 {
 	var errors = [];
 	this.$form.find("[data-type]").each(function(){
-		console.log($(this));
-		if($(this).data('type') === 'number' )
+		switch($(this).data('type'))
 		{
-			if($.isNumeric($(this).val()) === false)
-			{
-				errors.push({
-					fieldName : $(this).data('name'),
-					Message : "doit être un nombre",
-				});
-			}
-		}
-		
+			case  'number':
+				if($.isNumeric($(this).val()) === false) {
+					errors.push({
+						fieldName: $(this).data('name'),
+						Message: "doit être un nombre",
+					});
+				}
+
+            break;
+            case ('positive-integer'):
+                if(isInteger($(this).val()) == false) {
+                    errors.push({
+                        fieldName: $(this).data('name'),
+                        Message: "ne doit pas être un nombres a virgule, des lettres",
+                    });
+                }
+                else if( $(this).val() <= 0)
+                {
+                    errors.push({
+                        fieldName: $(this).data('name'),
+                        Message: "ne doit pas être un nombres négatif et non nul",
+                    });
+                }
+                break;
+        }
 	});
 	$.merge(this.totalErrors, errors);
 }

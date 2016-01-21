@@ -1,15 +1,16 @@
 <aside id="card">
 </aside>
-  
-<aside class="error-message hidden">
-        <h3><i class="fa fa-warning"></i> Il y a <em class="total-error-count">1</em> erreur(s) dans le formulaire !</h3>
-        <p></p>
-</aside>
-   
+
+
 <!--   Autre solution-->
-   <fieldset>
+<form action="" method="POST" class="generic-form" id="orderForm" data-form>
+	<aside class="error-message hidden">
+		<h3><i class="fa fa-warning"></i> Il y a <em class="total-error-count">1</em> erreur(s) dans le formulaire !</h3>
+		<p></p>
+	</aside>
+	<fieldset>
         <legend>Ajouter un article</legend>
-        <form action="" method="POST" class="generic-form" id="OrderForm">
+			<input type="hidden" name="salePrice" id="salePrice">
 			<ul>
 				<li>
 					<label for="meal">Faites Vos choix</label>
@@ -19,28 +20,31 @@
 						<?php endforeach; ?>
 					</select>
 					<article class="meal-details no-left-label" id="meal-details">
-						<img src="" alt="">
+						<img src="#" alt="">
 						<p></p>
-						<span>Prix : <strong></strong>€</span>
+						<span>Prix : <strong></strong></span>
 					</article>
+				</li>
+				<li class="no-left-label">
+					<input type="text" name="quantity" id="quantity" class="quantity" maxlength=3 data-required data-name="quantite" data-type="positive-integer">
 				</li>
 				<li>
 					<button class="no-left-label button
 button-primary"><i class="fa fa-cart-arrow-down"></i> Ajouter au panier</button>
 				</li>
 			</ul>
-		</form>
 	</fieldset>
-   
-   
-   
-   
-   
-   
-<!--Ma solution-->
-   
+</form>
 
-   <table class="generic-table meal-list">
+
+
+
+
+
+<!--Ma solution-->
+
+
+   <table class="generic-table meal-list addCard">
     <caption>Carte du restaurant</caption>
     <tbody>
 		<form action="" method="POST" id="OrderFormOneByOne">
@@ -60,7 +64,9 @@ button-primary"><i class="fa fa-cart-arrow-down"></i> Ajouter au panier</button>
 				</td>
 				<td>
 					<label for="quantity">Quantités souhaités</label>
-					<input type="number" data-id="<?= $oneMeal['Id']?>" class="quantity" data-name='<?= $oneMeal['Name']?>'>
+					<input type="number" name="quantity" class="quantity" data-id="<?= $oneMeal['Id']?>"
+						   data-name='<?=
+					$oneMeal['Name']?>'>
 				</td>
 				<td>
 					<input type="button" name="add" value="Ajouter au Panier" class="add button button-primary small">

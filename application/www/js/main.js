@@ -45,7 +45,6 @@ function dateTimePicker()
 	function runOrderForm2() {
 		var orderForm2 = new OrderForm2();
 		orderForm2.run();
-		orderForm2.onChangeMeal();
 	}
 
 
@@ -61,9 +60,8 @@ $(function(){
 	
 	runFormValidation();
 
-	if(typeof(OrderForm) != 'undefined') {
-		runOrderForm();
-	}
+    runOrderForm();
+
 	if(typeof(OrderForm2) != 'undefined') {
 		runOrderForm2();
 	}
