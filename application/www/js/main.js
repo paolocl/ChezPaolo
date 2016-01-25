@@ -53,6 +53,29 @@ function showCart ()
     }
 }
 
+function runOrderForm(){
+    if(typeof OrderForm != 'undefined')
+    {
+        var result = $('[data-order-step]').data('order-step');
+        console.log(result);
+
+        var orderForm = new OrderForm();
+
+        switch (result) {
+
+            case "success" :
+                orderForm.success('cart');
+                break;
+            case "run" :
+                orderForm.refreshOrderSummary();
+
+                orderForm.run();
+                break;
+        }
+    }
+}
+
+
 
 
 
@@ -71,5 +94,7 @@ $(function(){
 	runOrder();
 
     showCart ();
+
+    runOrderForm();
 	
 });

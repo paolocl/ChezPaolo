@@ -54,7 +54,7 @@ OrderForm.prototype.minus = function()
     showCart ();
 };
 
-OrderForm.prototype.addOneMeal = function($mealId)
+OrderForm.prototype.addOneMeal = function()
 {
     //console.log(event.currentTarget);
     //console.log(event.target);
@@ -73,6 +73,29 @@ OrderForm.prototype.addOneMeal = function($mealId)
     showCart ();
 };
 
+OrderForm.prototype.changeNbmValue = function()
+{
+    //console.log(event.keyCode);
+    //console.log(event.target);
+    var mealId = event.target.getAttribute('data-id');
+
+    var classField = event.target.getAttribute('class');
+    var newValue = parseInt($('.'+ classField +'[data-id='+mealId+']').val());
+    var cart = loadDataFromDomStorage('cart');
+    $.map(cart, function(value)
+    {
+        if(value.mealId == mealId) {
+            if (newValue <= 50 && newValue > 0) {
+                value.quantite = newValue;
+            }
+        }
+    });
+    saveDataToDomStorage('cart', cart);
+    showCart ();
+};
+
+
+
 OrderForm.prototype.onAjaxRefreshOrderSummary = function(basketViewHTML)
 {
     $('#order-summary').html(basketViewHTML);
@@ -89,6 +112,7 @@ OrderForm.prototype.onAjaxRefreshOrderSummary = function(basketViewHTML)
 
     $('.minus').click(this.minus.bind(this));
     $('.plus').click(this.addOneMeal.bind(this));
+    $('.quantiteChange').change(this.changeNbmValue.bind(this));
 
     var cart = sessionStorage.getItem('cart');
     $('#order').val(cart);
@@ -99,6 +123,11 @@ OrderForm.prototype.refreshOrderSummary = function()
     var formFields = { 'basketItems' : this.basketSession }
     return $.post(getRequestUrl() + "/Basket", formFields, this.onAjaxRefreshOrderSummary.bind(this));
 
+}
+
+OrderForm.prototype.success = function(name)
+{
+    sessionStorage.removeItem(name);
 }
 
 

@@ -20,7 +20,7 @@
             <td  class="number"><?= number_format($Item['price'],2,',','') ?>€</td>
             <td  class="number"><?= number_format($Item['price']*$Item['quantite'],2,',',''); ?>€</td>
             <td  class="number">
-                <input type="text" name="quantite" value="<?= $Item['quantite'] ?>" data-id="<?= $Item['mealId'] ?>" data-quantite="<?= $Item['quantite'] ?>">
+                <input type="text" name="quantite" value="<?= $Item['quantite'] ?>" data-id="<?= $Item['mealId'] ?>" data-quantite="<?= $Item['quantite'] ?>" class="quantiteChange">
                 <i class="fa fa-plus-square plus"  data-id="<?= $Item['mealId'] ?>" data-quantite="<?= $Item['quantite'] ?>"></i>
                 <i class="fa fa-minus-square minus" data-id="<?= $Item['mealId'] ?>" data-quantite="<?= $Item['quantite'] ?>"></i>
             </td>

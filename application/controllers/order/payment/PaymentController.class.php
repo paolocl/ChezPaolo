@@ -58,6 +58,8 @@ class PaymentController
             $http->redirectTo('/User/Login');
         }
 
+        //TODO : API BANCAIRE
+
         $http->redirectTo('/Order/Payment/Success');
 
     }

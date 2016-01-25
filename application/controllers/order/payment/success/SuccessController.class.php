@@ -22,7 +22,6 @@ class SuccessController
         {
             $http->redirectTo('/User/Login');
         }
-
     }
     public function httpPostMethod(Http $http, array $formFields)
     {
