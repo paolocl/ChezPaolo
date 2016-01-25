@@ -1,28 +1,39 @@
-<aside id="card">
-	
-</aside>
-   
+
 
    <table class="generic-table meal-list">
     <caption>Carte du restaurant</caption>
     <tbody>
         <?php //var_dump($_SESSION);//var_dump($listMeals); ?>
         <?php foreach($listMeals as $oneMeal): ?>
-        <tr>
+        <tr class="addCart">
 						<td><img src="<?= $wwwUrl ?>/images/meals/<?= $oneMeal['Photo']?>" alt=""></td>
 						<td>
 							<strong><a href="<?= $requestUrl; ?>/Meal?produit_id=<?= $oneMeal['Id']?>"><?= $oneMeal['Name']?></a></strong>
 						</td>
 						<td class="number"><strong><?= number_format($oneMeal['SalePrice'],2);?></strong> €</td>
-						<td class="addCart">
-						<input type="number" data-id="<?= $oneMeal['Id']?>" class="quantity" data-name='<?= $oneMeal['Name']?>'>
-						<input type="button" name="add" value="Ajouter au Panier" class="add button button-primary small">
+						<td>
+						<input type="hidden" class="quantite" data-name='<?= $oneMeal['Name']?>' data-id="<?= $oneMeal['Id']?>" data-price="<?= $oneMeal['SalePrice'] ?>" value="1">
+						<button name="add" class="add button button-primary small">Ajouter au Panier</button>
 						<p></p>
 						</td>
 				</tr>
         <?php endforeach; ?>
     </tbody>
 </table>
+<form action="">
+    <fieldset>
+        <legend>Récapitulatif de Commande</legend>
+        <section id="order-summary"></section>
+    </fieldset>
 
-<script src="<?= $wwwUrl ?>/js/classes/OrderForm.class.js"></script>
+    <ul class="link-list">
+        <li>
+            <button id="validate-order" class="button button-primary" disabled>Valider la commande</button>
+            <a class="button button-cancel small" href="<?= $requestUrl ?>">Annuler</a>
+        </li>
+    </ul>
+</form>
+
+<script src="<?= $wwwUrl ?>/js/classes/Order.class.js"></script>
 <script src="<?= $wwwUrl ?>/js/classes/Cart.class.js"></script>
+<script src="<?= $wwwUrl ?>/js/classes/OrderForm.class.js"></script>

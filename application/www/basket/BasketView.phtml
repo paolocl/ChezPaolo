@@ -1,0 +1,31 @@
+<?php if($basketItems != 0): ?>
+<table class="generic-table">
+    <thead>
+    <tr>
+        <th>Produit</th>
+        <th class="number">Quantité</th>
+        <th class="number">Prix unitaire </th>
+        <th class="number">Prix total</th>
+        <th class="number">quantités</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        <?php foreach($basketItems as $Item): ?>
+        <tr>
+            <td><strong><?= $Item['mealName'] ?></strong></td>
+            <td  class="number"><?= $Item['quantite'] ?></td>
+            <td  class="number"><?= number_format($Item['price'],2,',','') ?></td>
+            <td  class="number"><?= number_format($Item['price']*$Item['quantite'],2,',',''); ?></td>
+            <td  class="number">
+                <input type="text" name="quantite" value="<?= $Item['quantite'] ?>">
+                <i class="fa fa-plus-square  plus"  data-id="<?= $Item['mealId'] ?>" data-quantite="<?= $Item['quantite'] ?>"></i>
+                <i class="fa fa-minus-square minus" data-id="<?= $Item['mealId'] ?>" data-quantite="<?= $Item['quantite'] ?>"></i>
+            </td>
+            <td><i class="fa fa-trash removeFromOrder" data-id="<?= $Item['mealId'] ?>" title="supprimer"></i></td>
+        </tr>
+        <?php endforeach; ?>
+
+    </tbody>
+</table>
+<?php endif; ?>

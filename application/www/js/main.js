@@ -30,16 +30,28 @@ function dateTimePicker()
 	}
 }
 
-function runOrderForm()
+function runOrder()
 {
-	var orderForm;
-	var $order = $('.addCart');
+	var order;
 	
 	$('.addCart').each(function(){
-		orderForm = new OrderForm($(this));
-		orderForm.run();
+		order = new Order($(this));
+		order.run();
 	});
+
 }
+
+function showCart ()
+{
+
+
+    var orderForm = new OrderForm();
+
+    orderForm.refreshOrderSummary();
+
+    orderForm.run();
+}
+
 
 
 
@@ -50,12 +62,14 @@ function runOrderForm()
 
 
 $(function(){
-	
+    console.log(new OrderForm() == undefined);
+
 	dateTimePicker();
-	
+
 	runFormValidation();
-	
-	runOrderForm();
-	
+
+	runOrder();
+
+    showCart ();
 	
 });

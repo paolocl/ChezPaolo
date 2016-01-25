@@ -74,7 +74,7 @@ class UserSession
 	{
 
 		$NumberOfTryConnection = $this->getNumberOfTryConnectionByIp($ip);
-		//un update a chaque fois puis faire un count pour connaitre le nombre aujourd'hui
+
 		if($NumberOfTryConnection['total'] > 5)
 		{
 			throw new DomainException('Vous vous été connecté trop de fois sans jamais réussir à vous loger');
@@ -88,7 +88,7 @@ class UserSession
 		return $database->queryOne('
 		SELECT COUNT(LoginIp) AS total
 		FROM Login
-		WHERE (LoginTime BETWEEN DATE_SUB(NOW(),INTERVAL 5 MINUTE AND NOW()))
+		WHERE (LoginTime BETWEEN DATE_SUB(NOW(),INTERVAL 5 MINUTE) AND NOW())
 		AND LoginIp = ?',[$ip]);
 	}
 

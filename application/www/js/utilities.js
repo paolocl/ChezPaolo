@@ -96,3 +96,7 @@ function saveDataToDomStorage(name, data)
 
     sessionStorage.setItem(name, jsonData);
 }
+
+function removeDataFromDomStorage(name){
+    sessionStorage.removeItem(name);
+}

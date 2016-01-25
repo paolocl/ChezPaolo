@@ -6,22 +6,24 @@
 var Cart = function($ajouterPanier)
 {
     this.$ajouterPanier = $ajouterPanier;
-    this.$quantity = $ajouterPanier.find('.quantity');
+    this.$quantite = $ajouterPanier.find('.quantite');
 };
 
-Cart.prototype.addOneQuantity = function()
+Cart.prototype.addOnequantite = function()
 {
     var cart = [];
     var checkElementIncart = false;
-    var $quantity = this.$quantity.val().trim();
-    var $mealId = this.$quantity.data('id');
-    var $mealName = this.$quantity.data('name');
+    var $quantite = this.$quantite.val().trim();
+    var $mealId = this.$quantite.data('id');
+    var $mealName = this.$quantite.data('name');
+    var $price = this.$quantite.data('price');
     var order = {
         'mealId' : $mealId,
         'mealName' : $mealName,
-        'quantity' : $quantity
+        'price' : $price,
+        'quantite' : $quantite
     };
-    var checkcart = this.checkcartElement();
+    var checkcart = this.checkCartElement();
 
     if(checkcart != null)
     {
@@ -30,7 +32,7 @@ Cart.prototype.addOneQuantity = function()
         {
             if(value.mealId == $mealId)
             {
-                value.quantity = parseInt($quantity) + parseInt(value.quantity);
+                value.quantite = parseInt($quantite) + parseInt(value.quantite);
                 checkElementIncart = true;
             }
         });
@@ -44,13 +46,8 @@ Cart.prototype.addOneQuantity = function()
     saveDataToDomStorage('cart', cart);
 };
 
-Cart.prototype.checkcartElement = function()
+Cart.prototype.checkCartElement = function()
 {
-    var cart = loadDataFromDomStorage('cart');
-    if(cart === null)
-    {
-        return jQuery.parseJSON(cart);
-    }
-    return false;
+    return loadDataFromDomStorage('cart');
 };
 //
