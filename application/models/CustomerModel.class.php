@@ -63,7 +63,11 @@ class CustomerModel
 			Id,
 			FirstName,
 			LastName,
-			Email
+			Email,
+			Address,
+			Address2,
+			City,
+			ZipCode
 		FROM Customer 
 		WHERE Id = ? ', [$Customer_id]);
 	}

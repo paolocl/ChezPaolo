@@ -27,6 +27,24 @@ class OrderModel
         return $database->executeSql('INSERT INTO `Order` (Customer_Id, TaxeRate, CreationTimestamp) VALUES (?,?,NOW())',[$customer_Id, $taxeRate]);
     }
 
+    public function findOrder($order_Id)
+    {
+        $database = new Database();
+
+        return $database->queryOne('SELECT Customer_Id, TotalAmount, TaxeAmount   FROM `Order` WHERE Id
+ = ?', [$order_Id]);
+    }
+
+    public function getOrderLineByOrderId($order_Id)
+    {
+        $database = new Database();
+
+        return $database->query('SELECT Quantite, Unitprice, `Name`, Photo FROM `OrderLine` INNER JOIN `Meal` ON `Meal`.Id = OrderLine.Meal_Id  WHERE
+Order_Id
+ = ?', [$order_Id]);
+    }
+
+
     public function getTotalAmountByOrderId($order_Id)
     {
         $total = 0;
@@ -40,14 +58,15 @@ WHERE Order_Id = ?', [$order_Id]);
             $total += $oneMeal['Quantite']*$oneMeal['UnitPrice'];
         }
 
-        $database->executeSql('UPDATE `Order` SET TotalAmount = ?, TaxeAmount = TotalAmount*`Order`.TaxeRate WHERE Id = ?',[$total ,$order_Id]);
+        $database->executeSql('UPDATE `Order` SET TotalAmount = ?, TaxeAmount = (?*`Order`.TaxeRate/100), CompliteTimestamp = NOW() WHERE Id
+ = ?',[$total ,$total ,$order_Id]);
 
     }
 
 
     public function validation($order, $user_Id)
     {
-        $order_Id = $this->createOrder($user_Id, '0.20');
+        $order_Id = $this->createOrder($user_Id, '20');
 
         $orderArray = json_decode($order);
 
@@ -60,6 +79,8 @@ WHERE Order_Id = ?', [$order_Id]);
         }
 
         $this->getTotalAmountByOrderId($order_Id);
+
+        return $order_Id;
 
     }
 

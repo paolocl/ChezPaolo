@@ -10,8 +10,7 @@ var OrderForm = function()
 
 OrderForm.prototype.run = function()
 {
-        $('#order-summary').on("click", '.removeFromOrder', this.deletFromCart.bind(this));
-
+    $('#order-summary').on("click", '.removeFromOrder', this.deletFromCart.bind(this));
 }
 
 OrderForm.prototype.deletFromCart = function(event)

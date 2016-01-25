@@ -6,17 +6,17 @@
         <?php //var_dump($_SESSION);//var_dump($listMeals); ?>
         <?php foreach($listMeals as $oneMeal): ?>
         <tr class="addCart">
-						<td><img src="<?= $wwwUrl ?>/images/meals/<?= $oneMeal['Photo']?>" alt=""></td>
-						<td>
-							<strong><a href="<?= $requestUrl; ?>/Meal?produit_id=<?= $oneMeal['Id']?>"><?= $oneMeal['Name']?></a></strong>
-						</td>
-						<td class="number"><strong><?= number_format($oneMeal['SalePrice'],2);?></strong> €</td>
-						<td>
-						<input type="hidden" class="quantite" data-name='<?= $oneMeal['Name']?>' data-id="<?= $oneMeal['Id']?>" data-price="<?= $oneMeal['SalePrice'] ?>" value="1">
-						<button name="add" class="add button button-primary small">Ajouter au Panier</button>
-						<p></p>
-						</td>
-				</tr>
+            <td><img src="<?= $wwwUrl ?>/images/meals/<?= $oneMeal['Photo']?>" alt=""></td>
+            <td>
+                <strong><a href="<?= $requestUrl; ?>/Meal?produit_id=<?= $oneMeal['Id']?>"><?= $oneMeal['Name']?></a></strong>
+            </td>
+            <td class="number"><strong><?= number_format($oneMeal['SalePrice'],2);?></strong> €</td>
+            <td>
+            <input type="hidden" class="quantite" data-name='<?= $oneMeal['Name']?>' data-id="<?= $oneMeal['Id']?>" data-price="<?= $oneMeal['SalePrice'] ?>" value="1">
+            <button name="add" class="add button button-primary small">Ajouter au Panier</button>
+            <p></p>
+            </td>
+        </tr>
         <?php endforeach; ?>
     </tbody>
 </table>

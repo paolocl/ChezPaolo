@@ -58,12 +58,12 @@
     background-color: #339966;
     color: white;
 }
+.generic-table tr:not(.small-notice):hover td input[type='number']
+{
+color: black;
+}
 .generic-table tr:not(.small-notice):hover td input
 {
     background-color: white;
-    color: black;
-}
-.generic-table tr:not(.small-notice):hover td input[type='number']
-{
     color: black;
 }

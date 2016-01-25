@@ -2,15 +2,6 @@
 
 class ValidationController
 {
-    public function httpGetMethod(Http $http, array $queryFields)
-    {
-        /*
-         * Méthode appelée en cas de requête HTTP GET
-         *
-         * L'argument $http est un objet permettant de faire des redirections etc.
-         * L'argument $queryFields contient l'équivalent de $_GET en PHP natif.
-         */
-    }
 
     public function httpPostMethod(Http $http, array $formFields)
     {
@@ -26,16 +17,17 @@ class ValidationController
         {
             $http->redirectTo('/User/Login');
         }
-        // TODO: VERIF DES DONNéES
 
         $orderModel = new OrderModel();
 
-        $orderModel->validation($formFields['order'], $userSession->getId());
+        $order_Id = $orderModel->validation($formFields['order'], $userSession->getId());
 
-        $formFields['order'];
+        //$order = $orderModel->getOrderById($order_Id);
+        //return ['order', $order];
 
+        $http->redirectTo('/Order/Payment?order_Id='.$order_Id);
 
-
+        // TODO : PAGE DE VALIDATION DU PANIER ET BOUTON PAYMENT
 
     }
 }

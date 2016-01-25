@@ -1,0 +1,63 @@
+<section class="invoice">
+    <?php //var_dump($customerInformation); ?>
+    <?php ($customerInformation); ?>
+    <p><strong><?= $customerInformation['LastName'] . ' ' . $customerInformation['FirstName'] ?></strong></p>
+    <?php if(empty($customerInformation['Address2']) == false): ?>
+        <p><?= $customerInformation['Address2'] ?></p>
+    <?php endif; ?>
+    <p><?= $customerInformation['Address'] ?></p>
+    <p><?= $customerInformation['ZipCode'] ?> <span class="city"><?= $customerInformation['City'] ?></span></p>
+</section>
+<h2>Résumé de commande</h2>
+<table class="generic-table meal-list">
+    <?php //var_dump($order); ?>
+    <?php if($order != 0): ?>
+    <thead>
+            <tr>
+                <th>Produit</th>
+                <th class="number">Quantité</th>
+                <th class="number">Prix unitaire </th>
+                <th class="number">Prix total</th>
+            </tr>
+            </thead>
+    <tfoot>
+    <?php //var_dump($orderInformation); ?>
+    <tr>
+        <td colspan="3">HT</td>
+        <td>TVA <?= $orderInformation['TotalAmount']-$orderInformation['TaxeAmount'] ?>€</td>
+    </tr>
+    <tr>
+        <td colspan="3">TVA(20%)</td>
+        <td>TVA <?= $orderInformation['TaxeAmount'] ?>€</td>
+    </tr>
+    <tr>
+        <td colspan="3"><strong>Total</strong></td>
+        <td><?= $orderInformation['TotalAmount'] ?>€</td>
+    </tr>
+    </tfoot>
+    <tbody>
+            <?php foreach($order as $Item): ?>
+                <tr>
+                    <td><img src="<?= $wwwUrl ?>/images/meals/<?= $Item['Photo'] ?> " alt="<?= $Item['Name'] ?>" width="25%"><em><?= $Item['Name'] ?></em></td>
+                    <td  class="number"><?= $Item['Quantite'] ?></td>
+                    <td  class="number"><?= number_format($Item['Unitprice'],2,',','') ?>€</td>
+                    <td  class="number"><?= number_format($Item['Unitprice']*$Item['Quantite'],2,',',''); ?>€</td>
+                </tr>
+            <?php endforeach; ?>
+
+            </tbody>
+            <input type="hidden" name="order" id="order">
+        </table>
+    <?php endif; ?>
+</table>
+
+<hr>
+<h3>Merci de bien vouloir procéder au paiement de la commande.</h3>
+<form class="generic-form" action="<?= $requestUrl ?>/order/payment" method="POST">
+    <ul>
+        <li>
+            <input class="button button-primary" type="submit" value="Payer">
+            <a class="button button-cancel small" href="<?= $requestUrl ?>">Annuler</a>
+        </li>
+    </ul>
+</form>

@@ -43,11 +43,14 @@ function runOrder()
 
 function showCart ()
 {
-    var orderForm = new OrderForm();
+    if(typeof OrderForm != 'undefined')
+    {
+        var orderForm = new OrderForm();
 
-    orderForm.refreshOrderSummary();
+        orderForm.refreshOrderSummary();
 
-    orderForm.run();
+        orderForm.run();
+    }
 }
 
 
