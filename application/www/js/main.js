@@ -43,8 +43,6 @@ function runOrder()
 
 function showCart ()
 {
-
-
     var orderForm = new OrderForm();
 
     orderForm.refreshOrderSummary();
@@ -62,7 +60,6 @@ function showCart ()
 
 
 $(function(){
-    console.log(new OrderForm() == undefined);
 
 	dateTimePicker();
 

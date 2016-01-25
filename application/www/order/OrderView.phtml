@@ -20,7 +20,7 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-<form action="">
+<form action="<?= $requestUrl ?>/Order/Validation" method="post">
     <fieldset>
         <legend>Récapitulatif de Commande</legend>
         <section id="order-summary"></section>

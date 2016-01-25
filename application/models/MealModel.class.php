@@ -9,6 +9,15 @@ class MealModel
 
 		return $query->queryOne('SELECT * FROM Meal WHERE Id = ?',[$mealId]);			
 	}
+
+    public function getPriceById($mealId)
+	{
+		//var_dump($mealId);
+
+		$query = new Database();
+
+		return $query->queryOne('SELECT SalePrice FROM Meal WHERE Id = ?',[$mealId]);
+	}
 	
 	public function listAll(){
 		

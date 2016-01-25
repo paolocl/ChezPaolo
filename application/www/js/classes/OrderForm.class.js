@@ -12,20 +12,16 @@ OrderForm.prototype.run = function()
 {
         $('#order-summary').on("click", '.removeFromOrder', this.deletFromCart.bind(this));
 
-        $('#order-summary').on("click", '.minus', this.minus.bind(this));
-
-    $('#order-summary').on("click", '.plus', this.plus.bind(this));
-
 }
 
 OrderForm.prototype.deletFromCart = function(event)
 {
-    console.log(event.currentTarget);
+    //console.log(event.currentTarget);
 
     var cart = loadDataFromDomStorage('cart');
 
     for(var i = 0; i<cart.length ; i++) {
-        console.log(cart[i].mealId == event.currentTarget.getAttribute('data-id'));
+        //console.log(cart[i].mealId == event.currentTarget.getAttribute('data-id'));
         if(cart[i].mealId == event.currentTarget.getAttribute('data-id') )
         {
             cart.splice(i, 1);
@@ -38,30 +34,40 @@ OrderForm.prototype.deletFromCart = function(event)
 
 OrderForm.prototype.minus = function()
 {
-    console.log(event.currentTarget);
-    console.log(event.target);
+    //console.log(event.currentTarget);
+    //console.log(event.target);
+
     var mealId = event.target.getAttribute('data-id');
 
     var cart = loadDataFromDomStorage('cart');
+
+    console.log();
     $.map(cart, function(value)
     {
         if(value.mealId == mealId)
         {
-            value.quantite = parseInt(value.quantite)-1;
+            if(value.quantite > 0) {
+                value.quantite = parseInt(value.quantite) - 1;
+            }
         }
     });
     saveDataToDomStorage('cart', cart);
     showCart ();
 };
 
-OrderForm.prototype.plus = function($mealId)
+OrderForm.prototype.addOneMeal = function($mealId)
 {
+    //console.log(event.currentTarget);
+    //console.log(event.target);
+    var mealId = event.target.getAttribute('data-id');
+
     var cart = loadDataFromDomStorage('cart');
     $.map(cart, function(value)
     {
-        if(value.mealId == $mealId)
-        {
-            value.quantite = parseInt(value.quantite)+1;
+        if(value.mealId == mealId) {
+            if (value.quantite < 50) {
+                value.quantite = parseInt(value.quantite) + 1;
+            }
         }
     });
     saveDataToDomStorage('cart', cart);
@@ -81,6 +87,12 @@ OrderForm.prototype.onAjaxRefreshOrderSummary = function(basketViewHTML)
     {
         $('#validate-order').removeAttr('disabled');
     }
+
+    $('.minus').click(this.minus.bind(this));
+    $('.plus').click(this.addOneMeal.bind(this));
+
+    var cart = sessionStorage.getItem('cart');
+    $('#order').val(cart);
 }
 
 OrderForm.prototype.refreshOrderSummary = function()
@@ -89,6 +101,7 @@ OrderForm.prototype.refreshOrderSummary = function()
     return $.post(getRequestUrl() + "/Basket", formFields, this.onAjaxRefreshOrderSummary.bind(this));
 
 }
+
 
 
 

@@ -11,15 +11,17 @@
     </tr>
     </thead>
     <tbody>
-        <?php foreach($basketItems as $Item): ?>
-        <tr>
+    <?php $total = 0 ?>
+    <?php foreach($basketItems as $Item): ?>
+            <?php $total += $Item['price']*$Item['quantite']; ?>
+            <tr>
             <td><strong><?= $Item['mealName'] ?></strong></td>
             <td  class="number"><?= $Item['quantite'] ?></td>
             <td  class="number"><?= number_format($Item['price'],2,',','') ?></td>
             <td  class="number"><?= number_format($Item['price']*$Item['quantite'],2,',',''); ?></td>
             <td  class="number">
-                <input type="text" name="quantite" value="<?= $Item['quantite'] ?>">
-                <i class="fa fa-plus-square  plus"  data-id="<?= $Item['mealId'] ?>" data-quantite="<?= $Item['quantite'] ?>"></i>
+                <input type="text" name="quantite" value="<?= $Item['quantite'] ?>" data-id="<?= $Item['mealId'] ?>" data-quantite="<?= $Item['quantite'] ?>">
+                <i class="fa fa-plus-square plus"  data-id="<?= $Item['mealId'] ?>" data-quantite="<?= $Item['quantite'] ?>"></i>
                 <i class="fa fa-minus-square minus" data-id="<?= $Item['mealId'] ?>" data-quantite="<?= $Item['quantite'] ?>"></i>
             </td>
             <td><i class="fa fa-trash removeFromOrder" data-id="<?= $Item['mealId'] ?>" title="supprimer"></i></td>
@@ -27,5 +29,12 @@
         <?php endforeach; ?>
 
     </tbody>
+    <tfoot>
+    <tr>
+        <td><strong>Total</strong></td>
+        <td id="totalOrder" colspan="5"><?= $total ?> euros</td>
+    </tr>
+    </tfoot>
+    <input type="hidden" name="order" id="order">
 </table>
 <?php endif; ?>
